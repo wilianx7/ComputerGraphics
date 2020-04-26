@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgtButtonModule, NgtDatatableModule, NgtInputModule, NgtPortletModule } from 'ng-tailwind';
+import { NgtButtonModule, NgtDatatableModule, NgtHttpService, NgtInputModule } from 'ng-tailwind';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FormsModule } from '@angular/forms';
+import { HttpService } from './services/http.service';
 
 @NgModule({
   declarations: [
@@ -16,12 +17,15 @@ import { FormsModule } from '@angular/forms';
     FormsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    NgtPortletModule,
     NgtInputModule,
     NgtDatatableModule,
     NgtButtonModule,
   ],
   providers: [
+    {
+      provide: NgtHttpService,
+      useClass: HttpService
+    },
     {
       provide: 'NgtPortletStyle',
       useValue: {
