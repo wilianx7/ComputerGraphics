@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NgtDatatableType } from 'ng-tailwind';
 
 @Component({
   selector: 'app-root',
@@ -31,6 +32,8 @@ export class AppComponent {
   public airportDistance: number;
   public nearbyPlanesDistance: number;
   public collisionDistance: number;
+
+  public ngtDatatableType: NgtDatatableType = NgtDatatableType.fixed;
 
   public saveInputData() { }
 
