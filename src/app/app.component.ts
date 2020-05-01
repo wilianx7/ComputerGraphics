@@ -1,12 +1,15 @@
-import { Component } from '@angular/core';
-import { NgtDatatableType } from 'ng-tailwind';
+import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
+import { NgtDatatableComponent, NgtDatatableType } from 'ng-tailwind';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class AppComponent {
+  @ViewChild('ngtDatatable') ngtDatatable: NgtDatatableComponent;
+
   /** Input Data */
   public inputPositionX: number;
   public inputPositionY: number;
@@ -33,7 +36,19 @@ export class AppComponent {
   public nearbyPlanesDistance: number;
   public collisionDistance: number;
 
+  /** DataGrid */
   public ngtDatatableType: NgtDatatableType = NgtDatatableType.fixed;
+  public tableData: Array<DataGridModel> = [
+    {
+      id: 1,
+      x: 2,
+      y: 3,
+      radius: 1,
+      angle: 360,
+      speed: 200,
+      direction: 90
+    }, /** Exemplo */
+  ];
 
   public saveInputData() { }
 
@@ -48,4 +63,14 @@ export class AppComponent {
   public trackNearbyPlanes() { }
 
   public trackCollision() { }
+}
+
+export class DataGridModel {
+  public id: number;
+  public x: number;
+  public y: number;
+  public radius: number;
+  public angle: number;
+  public speed: number;
+  public direction: number;
 }

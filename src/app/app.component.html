@@ -1,4 +1,4 @@
-<div class="h-screen w-full justify-center items-center bg-gray-200 px-3 py-3 text-gray-800 overflow-hidden">
+<div class="h-screen w-full justify-center items-center bg-gray-700 px-3 py-3 text-gray-800 overflow-hidden">
     <div class="h-full w-full bg-white shadow border overflow-auto px-4 py-4">
         <form #form='ngForm'>
             <div class="flex w-full h-auto">
@@ -37,8 +37,8 @@
 
                     <br>
                     <p class="font-semibold mb-1 w-full text-center">Funções de Transformação:</p>
-                    <div class="flex w-full h-auto">
-                        <div class="flex flex-col w-6/12 h-auto border rounded-lg px-4 py-4 bg-gray-100">
+                    <div class="flex flex-col w-full h-auto">
+                        <div class="flex flex-col w-full h-auto border rounded-lg px-4 py-4 bg-gray-100">
                             <div class="flex w-full">
                                 <ngt-input class="block w-6/12 px-2" mask='decimal' name='translandePositionX'
                                     [(ngModel)]="translandePositionX" label='X'></ngt-input>
@@ -51,7 +51,7 @@
                             </ngt-button>
                         </div>
 
-                        <div class="flex flex-col w-6/12 h-auto border rounded-lg ml-4 px-4 py-4 bg-gray-100">
+                        <div class="flex flex-col w-full h-auto border rounded-lg mt-4 px-4 py-4 bg-gray-100">
                             <div class="flex w-full">
                                 <ngt-input class="block w-6/12 px-2" mask='decimal' name='staggerPositionX'
                                     [(ngModel)]="staggerPositionX" label='X'></ngt-input>
@@ -82,42 +82,59 @@
                     </div>
                 </div>
 
-                <div class="flex flex-col w-5/12 mx-6">
-                    <p class="font-semibold mb-1 w-full text-center">Radar:</p>
-                    <div class="flex w-full h-full border rounded-lg">
-                        <!-- RADAR -->
-                    </div>
-                </div>
+                <div class="flex flex-col w-9/12 mx-6">
+                    <div class="flex w-full h-full">
+                        <div class="flex flex-col w-7/12 mr-6">
+                            <p class="font-semibold mb-1 w-full text-center">Radar:</p>
+                            <div class="flex w-full h-full border rounded-lg">
+                                <!-- RADAR -->
+                            </div>
+                        </div>
 
-                <div class="flex flex-col w-4/12">
-                    <p class="font-semibold mb-1 w-full text-center">DataGrid:</p>
-                    <div class="flex w-full h-full border rounded-lg">
-                        <!-- <ngt-datatable [type]='ngtDatatableType'>
+                        <div class="flex flex-col w-5/12">
+                            <p class="font-semibold mb-1 w-full text-center">Relatório:</p>
+                            <div class="flex w-full h-full border rounded-lg">
+                                <!-- Relatório -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <p class="font-semibold mb-1 mt-4 w-full text-center">DataGrid:</p>
+                    <div class="flex w-full h-full border rounded-lg overflow-auto">
+                        <ngt-datatable class="block min-w-full" [type]='ngtDatatableType' #ngtDatatable>
                             <thead ngt-thead>
                                 <tr ngt-tr>
-                                    <th class="text-transform: capitalize" ngt-th>Teste</th>
+                                    <th class="w-1" ngt-th-check></th>
+                                    <th ngt-th>ID</th>
+                                    <th ngt-th>X</th>
+                                    <th ngt-th>Y</th>
+                                    <th ngt-th>Raio</th>
+                                    <th ngt-th>Ângulo</th>
+                                    <th ngt-th>Velocidade</th>
+                                    <th ngt-th>Direção</th>
                                 </tr>
                             </thead>
 
-                            <tbody ngt-tbody class="font-normal font-sans">
-                                <tr ngt-tr *ngFor='let test of [0, 1]'>
-                                    <td ngt-td>Teste</td>
+                            <tbody ngt-tbody>
+                                <tr [evenStripped]='true' ngt-tr *ngFor='let data of tableData'>
+                                    <td [reference]='data' ngt-td-check></td>
+                                    <td ngt-td>{{ data.id }}</td>
+                                    <td ngt-td>{{ data.x }}</td>
+                                    <td ngt-td>{{ data.y }}</td>
+                                    <td ngt-td>{{ data.radius }}</td>
+                                    <td ngt-td>{{ data.angle }}</td>
+                                    <td ngt-td>{{ data.speed }}</td>
+                                    <td ngt-td>{{ data.direction }}</td>
                                 </tr>
                             </tbody>
-                        </ngt-datatable> -->
-                    </div>
-
-                    <br>
-                    <p class="font-semibold mb-1 w-full text-center">Relatório:</p>
-                    <div class="flex w-full h-full border rounded-lg">
-                        <!-- RELATÓRIO -->
+                        </ngt-datatable>
                     </div>
                 </div>
             </div>
 
             <br>
-            <p class="font-semibold mb-2 w-6/12 text-center">Funções de Rastreamento:</p>
-            <div class="flex w-6/12">
+            <p class="font-semibold mb-2 w-full text-center">Funções de Rastreamento:</p>
+            <div class="flex w-full">
                 <div class="flex flex-col w-4/12 h-auto border rounded-lg px-4 py-4 bg-gray-100">
                     <ngt-input class="block w-full px-2" mask='decimal' name='airportDistance'
                         [(ngModel)]="airportDistance" label='Distância mínima'></ngt-input>

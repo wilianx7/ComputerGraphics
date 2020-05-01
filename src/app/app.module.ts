@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -13,6 +14,7 @@ import { HttpService } from './services/http.service';
     AppComponent
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     FormsModule,
     AppRoutingModule,
@@ -45,6 +47,14 @@ import { HttpService } from './services/http.service';
         color: {
           border: 'border-gray-400 focus:border-blue-500',
           text: 'text-gray-800'
+        }
+      }
+    },
+    {
+      provide: 'NgtCheckboxStyle',
+      useValue: {
+        color: {
+          bg: 'bg-blue-500',
         }
       }
     },
