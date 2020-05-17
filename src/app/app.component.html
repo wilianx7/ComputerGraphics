@@ -8,19 +8,19 @@
                         <div class="flex w-full">
                             <ngt-input class="block w-6/12 px-2" mask='decimal' name='inputPositionX'
                                 [(ngModel)]="inputPositionX" label='X' [jit]='true'
-                                [isDisabled]="radiusInput || angleInput"></ngt-input>
+                                (keypress)='calculatePolarCoordinates()'></ngt-input>
                             <ngt-input class="block w-6/12 px-2" mask='decimal' name='inputPositionY'
                                 [(ngModel)]="inputPositionY" label='Y' [jit]='true'
-                                [isDisabled]="radiusInput || angleInput"></ngt-input>
+                                (keypress)='calculatePolarCoordinates()'></ngt-input>
                         </div>
 
                         <div class="flex w-full mt-2">
                             <ngt-input class="block w-6/12 px-2" mask='decimal' name='radiusInput'
                                 [(ngModel)]="radiusInput" label='Raio' [jit]='true'
-                                [isDisabled]="inputPositionX || inputPositionY"></ngt-input>
+                                (keypress)='calculateCartesianCoordinates()'></ngt-input>
                             <ngt-input class="block w-6/12 px-2" mask='decimal' name='angleInput'
                                 [(ngModel)]="angleInput" label='Ângulo' [jit]='true'
-                                [isDisabled]="inputPositionX || inputPositionY"></ngt-input>
+                                (keypress)='calculateCartesianCoordinates()'></ngt-input>
                         </div>
 
                         <div class="flex w-full mt-2">

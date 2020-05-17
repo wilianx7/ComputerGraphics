@@ -38,31 +38,131 @@ export class AppComponent {
 
   /** DataGrid */
   public ngtDatatableType: NgtDatatableType = NgtDatatableType.fixed;
-  public tableData: Array<DataGridModel> = [
-    {
-      id: 1,
-      x: 2,
-      y: 3,
-      radius: 1,
-      angle: 360,
-      speed: 200,
-      direction: 90
-    }, /** Exemplo */
-  ];
+  public tableData: Array<DataGridModel> = [];
 
-  public saveInputData() { }
+  /**
+   * Responsavel por salvar os dados digitados pelo usuario
+   */
+  public saveInputData() {
+    //Adiciona as variaveis para salvar no array vinculado a Grid
+    this.tableData.push({
+      id: this.tableData.length + 1,
+      x: this.inputPositionX,
+      y: this.inputPositionY,
+      radius: this.radiusInput,
+      angle: this.angleInput,
+      speed: this.speedInput,
+      direction: this.directionInput
+    });
 
-  public translande() { }
+    this.clearInputs();
 
-  public stagger() { }
+  }
 
-  public rotate() { }
+  /**
+   * Calcula as coordenadas polares de acordo com as coordenadas cartesianas
+   * @param x Coordenada cartesiana X
+   * @param y Coordenada cartesiana Y
+   */
+  public calculatePolarCoordinates(x? : number, y? : number){
+    //Seta os valores default para calculo
+    x = x || this.inputPositionX;
+    y = y || this.inputPositionY;
+
+    //Calcula os dados da polar
+    this.radiusInput = this.calculatePolarCoordinatesRadius(x, y);
+    this.angleInput = this.calculatePolarCoordinatesAngle(x, y);
+  }
+
+  /**
+   * Retorna o raio
+   * @param x Coordenada cartesiana X
+   * @param y Coordenada cartesiana Y
+   */
+  private calculatePolarCoordinatesRadius(x : number, y : number):number{
+    //Calculo equivalente a linha abaixo: r = √x² + y²
+    return Number((Math.sqrt(Math.pow(x,2) + Math.pow(y,2))).toFixed(2)) || 0;;
+  }
+
+  /**
+   * Retorna o angulo
+   * @param x Coordenada cartesiana x
+   * @param y Coordenada cartesiana y
+   */
+  private calculatePolarCoordinatesAngle(x : number, y : number):number{
+    //Calculo equivalente a linha abaixo: tag(teta)
+    return Number((Math.atan2(y, x) * 180 / Math.PI).toFixed(2)) || 0;
+  }
+
+  //Calcula as coordenadas cartesianas de acordo com as coordenadas polares
+  public calculateCartesianCoordinates(){
+    //Seta os valores default
+    this.angleInput = this.angleInput || 0;
+    this.radiusInput = this.radiusInput || 0;
+
+    //Calcula os dados coordenadas cartesianas
+    //Calculo equivalentes:
+    // raio * cos(angulo)
+    this.inputPositionX = this.radiusInput * Math.cos(this.angleInput / (180 / Math.PI));
+    // raio * sen(angulo)
+    this.inputPositionY = this.radiusInput * Math.sin(this.angleInput / (180 / Math.PI));
+  }
+
+  /**
+   * Função para translandar os selecionados
+   */
+  public translande() { 
+    for(var data of this.tableData){
+      data.x = Number((Number(data.x) + Number(this.translandePositionX)).toFixed(2));
+      data.y = Number((Number(data.y) + Number(this.translandePositionY)).toFixed(2));
+      
+      //Calcular polar
+      data.radius = this.calculatePolarCoordinatesRadius(data.x, data.y) || 0;
+      data.angle = this.calculatePolarCoordinatesAngle(data.x, data.y) || 0;
+    }
+  }
+
+  /**
+   * Função para escalonar os selecionados
+   */
+  public stagger() { 
+    for(var data of this.tableData){
+      data.x = Number((Number(data.x) * Number(this.staggerPositionX / 100)).toFixed(2));
+      data.y = Number((Number(data.y) * Number(this.staggerPositionY / 100)).toFixed(2));
+      
+      //Calcular polar
+      data.radius = this.calculatePolarCoordinatesRadius(data.x, data.y) || 0;
+      data.angle = this.calculatePolarCoordinatesAngle(data.x, data.y) || 0;
+    }
+  }
+
+  /**
+   * Função para rotacionar os selecionados
+   */
+  public rotate() {
+    for(var data of this.tableData){
+      //TODO
+    }
+  }
 
   public trackPlanesNearAirport() { }
 
   public trackNearbyPlanes() { }
 
   public trackCollision() { }
+
+  /**
+   * Limpa as variaveis de entrada
+   */
+  private clearInputs(){
+    this.inputPositionX = 0;
+    this.inputPositionY = 0;
+    this.angleInput = 0;
+    this.radiusInput = 0;
+    this.speedInput = 0;
+    this.directionInput = 0;
+  }
+
 }
 
 export class DataGridModel {
