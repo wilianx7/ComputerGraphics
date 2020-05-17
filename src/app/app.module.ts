@@ -7,6 +7,7 @@ import { NgtButtonModule, NgtDatatableModule, NgtHttpService, NgtInputModule } f
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { RadarModule } from './components/radar/radar.module';
 import { HttpService } from './services/http.service';
 
 @NgModule({
@@ -19,6 +20,7 @@ import { HttpService } from './services/http.service';
     FormsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    RadarModule,
     NgtInputModule,
     NgtDatatableModule,
     NgtButtonModule,

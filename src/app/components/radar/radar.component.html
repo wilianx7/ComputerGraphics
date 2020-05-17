@@ -1,0 +1,11 @@
+<div class="min-h-full min-w-full relative" #radarContainer>
+    <div class="flex flex-wrap h-full w-full">
+        <ng-container *ngFor="let square of radarSquares">
+            <div class="border" [ngStyle]="{ 'height': square.height, 'width': square.width }">
+            </div>
+        </ng-container>
+    </div>
+
+    <div class="px-1 py-1 rounded-full bg-gray-700 absolute top-0" [ngStyle]="{ 'transform': middlePointTranslation }" #middlePoint>
+    </div>
+</div>
