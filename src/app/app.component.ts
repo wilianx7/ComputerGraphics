@@ -79,7 +79,7 @@ export class AppComponent {
    * @param x Coordenada cartesiana X
    * @param y Coordenada cartesiana Y
    */
-  private calculatePolarCoordinatesRadius(x : number, y : number):number{
+  private calculatePolarCoordinatesRadius(x : number, y : number) : number{
     //Calculo equivalente a linha abaixo: r = √x² + y²
     return Number((Math.sqrt(Math.pow(x,2) + Math.pow(y,2))).toFixed(2)) || 0;;
   }
@@ -89,12 +89,14 @@ export class AppComponent {
    * @param x Coordenada cartesiana x
    * @param y Coordenada cartesiana y
    */
-  private calculatePolarCoordinatesAngle(x : number, y : number):number{
+  private calculatePolarCoordinatesAngle(x : number, y : number) : number{
     //Calculo equivalente a linha abaixo: tag(teta)
     return Number((Math.atan2(y, x) * 180 / Math.PI).toFixed(2)) || 0;
   }
 
-  //Calcula as coordenadas cartesianas de acordo com as coordenadas polares
+  /**
+   * Calcula as coordenadas cartesianas de acordo com as coordenadas polares
+   */
   public calculateCartesianCoordinates(){
     //Seta os valores default
     this.angleInput = this.angleInput || 0;
@@ -140,8 +142,28 @@ export class AppComponent {
    * Função para rotacionar os selecionados
    */
   public rotate() {
+    //Calcula o cos(B) e sen(B) de acordo com o angulo preenchido
+    const cos = Number((Math.cos(this.rotateAngle/ (180 / Math.PI))).toFixed(2));
+    const sen = Number((Math.sin(this.rotateAngle/ (180 / Math.PI))).toFixed(2));
+    //Percorre todos os dados da grid
     for(var data of this.tableData){
-      //TODO
+      //Armazena pois os valores se alteram
+      const x = Number(data.x) - Number(this.rotateAngleX);
+      const y = Number(data.y) - Number(this.rotateAngleY);
+     
+      //Função equivalente as linhas abaixos
+      // x' = x.cos(B) - y.sen(B)
+      data.x = (x * cos) - (y * sen);
+      // y' = y.sen(B) + x.cos(B)
+      data.y = (x * cos) + (y * sen);
+
+      //Volta para os pontos com o calculo de rotação feito
+      data.x = Number((data.x + Number(this.rotateAngleX)).toFixed(2));
+      data.y = Number((data.y + Number(this.rotateAngleY)).toFixed(2));
+
+      //Calcular polar
+      data.radius = this.calculatePolarCoordinatesRadius(data.x, data.y) || 0;
+      data.angle = this.calculatePolarCoordinatesAngle(data.x, data.y) || 0;
     }
   }
 
