@@ -69,6 +69,10 @@ export class AppComponent {
     x = x || this.inputPositionX;
     y = y || this.inputPositionY;
 
+    if (!x || !y) {
+      return;
+    }
+
     //Calcula os dados da polar
     this.radiusInput = this.calculatePolarCoordinatesRadius(x, y);
     this.angleInput = this.calculatePolarCoordinatesAngle(x, y);
@@ -81,6 +85,7 @@ export class AppComponent {
    */
   private calculatePolarCoordinatesRadius(x : number, y : number) : number{
     //Calculo equivalente a linha abaixo: r = √x² + y²
+    console.log('R:' + Number((Math.sqrt(Math.pow(x,2) + Math.pow(y,2))).toFixed(2)))
     return Number((Math.sqrt(Math.pow(x,2) + Math.pow(y,2))).toFixed(2)) || 0;;
   }
 
@@ -113,11 +118,11 @@ export class AppComponent {
   /**
    * Função para translandar os selecionados
    */
-  public translande() { 
+  public translande() {
     for(var data of this.tableData){
       data.x = Number((Number(data.x) + Number(this.translandePositionX)).toFixed(2));
       data.y = Number((Number(data.y) + Number(this.translandePositionY)).toFixed(2));
-      
+
       //Calcular polar
       data.radius = this.calculatePolarCoordinatesRadius(data.x, data.y) || 0;
       data.angle = this.calculatePolarCoordinatesAngle(data.x, data.y) || 0;
@@ -127,11 +132,11 @@ export class AppComponent {
   /**
    * Função para escalonar os selecionados
    */
-  public stagger() { 
+  public stagger() {
     for(var data of this.tableData){
       data.x = Number((Number(data.x) * Number(this.staggerPositionX / 100)).toFixed(2));
       data.y = Number((Number(data.y) * Number(this.staggerPositionY / 100)).toFixed(2));
-      
+
       //Calcular polar
       data.radius = this.calculatePolarCoordinatesRadius(data.x, data.y) || 0;
       data.angle = this.calculatePolarCoordinatesAngle(data.x, data.y) || 0;
@@ -150,7 +155,7 @@ export class AppComponent {
       //Armazena pois os valores se alteram
       const x = Number(data.x) - Number(this.rotateAngleX);
       const y = Number(data.y) - Number(this.rotateAngleY);
-     
+
       //Função equivalente as linhas abaixos
       // x' = x.cos(B) - y.sen(B)
       data.x = (x * cos) - (y * sen);
