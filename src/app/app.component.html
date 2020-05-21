@@ -6,21 +6,21 @@
                     <p class="font-semibold mb-1 w-full text-center">Entrada de Dados:</p>
                     <div class="flex flex-col w-full h-auto border rounded-lg px-4 py-4 bg-gray-100">
                         <div class="flex w-full">
-                            <ngt-input class="block w-6/12 px-2" mask='decimal' name='inputPositionX'
+                            <ngt-input class="block w-6/12 px-2" name='inputPositionX'
                                 [(ngModel)]="inputPositionX" label='X' [jit]='true'
-                                (keypress)='calculatePolarCoordinates()'></ngt-input>
-                            <ngt-input class="block w-6/12 px-2" mask='decimal' name='inputPositionY'
+                                (keyup)='calculatePolarCoordinates()'></ngt-input>
+                            <ngt-input class="block w-6/12 px-2" name='inputPositionY'
                                 [(ngModel)]="inputPositionY" label='Y' [jit]='true'
-                                (keypress)='calculatePolarCoordinates()'></ngt-input>
+                                (keyup)='calculatePolarCoordinates()'></ngt-input>
                         </div>
 
                         <div class="flex w-full mt-2">
-                            <ngt-input class="block w-6/12 px-2" mask='decimal' name='radiusInput'
+                            <ngt-input class="block w-6/12 px-2" name='radiusInput'
                                 [(ngModel)]="radiusInput" label='Raio' [jit]='true'
-                                (keypress)='calculateCartesianCoordinates()'></ngt-input>
-                            <ngt-input class="block w-6/12 px-2" mask='decimal' name='angleInput'
+                                (keyup)='calculateCartesianCoordinates()'></ngt-input>
+                            <ngt-input class="block w-6/12 px-2" name='angleInput'
                                 [(ngModel)]="angleInput" label='Ângulo' [jit]='true'
-                                (keypress)='calculateCartesianCoordinates()'></ngt-input>
+                                (keyup)='calculateCartesianCoordinates()'></ngt-input>
                         </div>
 
                         <div class="flex w-full mt-2">

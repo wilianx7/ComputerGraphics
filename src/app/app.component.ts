@@ -44,7 +44,7 @@ export class AppComponent {
    * Responsavel por salvar os dados digitados pelo usuario
    */
   public saveInputData() {
-    //Adiciona as variaveis para salvar no array vinculado a Grid
+    // Adiciona as variaveis para salvar no array vinculado a Grid
     this.tableData.push({
       id: this.tableData.length + 1,
       x: this.inputPositionX,
@@ -64,16 +64,12 @@ export class AppComponent {
    * @param x Coordenada cartesiana X
    * @param y Coordenada cartesiana Y
    */
-  public calculatePolarCoordinates(x? : number, y? : number){
-    //Seta os valores default para calculo
+  public calculatePolarCoordinates(x?: number, y?: number) {
+    // Seta os valores default para calculo
     x = x || this.inputPositionX;
     y = y || this.inputPositionY;
 
-    if (!x || !y) {
-      return;
-    }
-
-    //Calcula os dados da polar
+    // Calcula os dados da polar
     this.radiusInput = this.calculatePolarCoordinatesRadius(x, y);
     this.angleInput = this.calculatePolarCoordinatesAngle(x, y);
   }
@@ -83,10 +79,9 @@ export class AppComponent {
    * @param x Coordenada cartesiana X
    * @param y Coordenada cartesiana Y
    */
-  private calculatePolarCoordinatesRadius(x : number, y : number) : number{
-    //Calculo equivalente a linha abaixo: r = √x² + y²
-    console.log('R:' + Number((Math.sqrt(Math.pow(x,2) + Math.pow(y,2))).toFixed(2)))
-    return Number((Math.sqrt(Math.pow(x,2) + Math.pow(y,2))).toFixed(2)) || 0;;
+  private calculatePolarCoordinatesRadius(x: number, y: number): number {
+    // Calculo equivalente a linha abaixo: r = √x² + y²
+    return Number((Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2))).toFixed(2)) || 0;
   }
 
   /**
@@ -94,21 +89,21 @@ export class AppComponent {
    * @param x Coordenada cartesiana x
    * @param y Coordenada cartesiana y
    */
-  private calculatePolarCoordinatesAngle(x : number, y : number) : number{
-    //Calculo equivalente a linha abaixo: tag(teta)
+  private calculatePolarCoordinatesAngle(x: number, y: number): number {
+    // Calculo equivalente a linha abaixo: tag(teta)
     return Number((Math.atan2(y, x) * 180 / Math.PI).toFixed(2)) || 0;
   }
 
   /**
    * Calcula as coordenadas cartesianas de acordo com as coordenadas polares
    */
-  public calculateCartesianCoordinates(){
-    //Seta os valores default
+  public calculateCartesianCoordinates() {
+    // Seta os valores default
     this.angleInput = this.angleInput || 0;
     this.radiusInput = this.radiusInput || 0;
 
-    //Calcula os dados coordenadas cartesianas
-    //Calculo equivalentes:
+    // Calcula os dados coordenadas cartesianas
+    // Calculo equivalentes:
     // raio * cos(angulo)
     this.inputPositionX = this.radiusInput * Math.cos(this.angleInput / (180 / Math.PI));
     // raio * sen(angulo)
@@ -119,11 +114,11 @@ export class AppComponent {
    * Função para translandar os selecionados
    */
   public translande() {
-    for(var data of this.tableData){
+    for (const data of this.tableData) {
       data.x = Number((Number(data.x) + Number(this.translandePositionX)).toFixed(2));
       data.y = Number((Number(data.y) + Number(this.translandePositionY)).toFixed(2));
 
-      //Calcular polar
+      // Calcular polar
       data.radius = this.calculatePolarCoordinatesRadius(data.x, data.y) || 0;
       data.angle = this.calculatePolarCoordinatesAngle(data.x, data.y) || 0;
     }
@@ -133,11 +128,11 @@ export class AppComponent {
    * Função para escalonar os selecionados
    */
   public stagger() {
-    for(var data of this.tableData){
+    for (const data of this.tableData) {
       data.x = Number((Number(data.x) * Number(this.staggerPositionX / 100)).toFixed(2));
       data.y = Number((Number(data.y) * Number(this.staggerPositionY / 100)).toFixed(2));
 
-      //Calcular polar
+      // Calcular polar
       data.radius = this.calculatePolarCoordinatesRadius(data.x, data.y) || 0;
       data.angle = this.calculatePolarCoordinatesAngle(data.x, data.y) || 0;
     }
@@ -147,26 +142,26 @@ export class AppComponent {
    * Função para rotacionar os selecionados
    */
   public rotate() {
-    //Calcula o cos(B) e sen(B) de acordo com o angulo preenchido
-    const cos = Number((Math.cos(this.rotateAngle/ (180 / Math.PI))).toFixed(2));
-    const sen = Number((Math.sin(this.rotateAngle/ (180 / Math.PI))).toFixed(2));
-    //Percorre todos os dados da grid
-    for(var data of this.tableData){
-      //Armazena pois os valores se alteram
+    // Calcula o cos(B) e sen(B) de acordo com o angulo preenchido
+    const cos = Number((Math.cos(this.rotateAngle / (180 / Math.PI))).toFixed(2));
+    const sen = Number((Math.sin(this.rotateAngle / (180 / Math.PI))).toFixed(2));
+    // Percorre todos os dados da grid
+    for (const data of this.tableData) {
+      // Armazena pois os valores se alteram
       const x = Number(data.x) - Number(this.rotateAngleX);
       const y = Number(data.y) - Number(this.rotateAngleY);
 
-      //Função equivalente as linhas abaixos
+      // Função equivalente as linhas abaixos
       // x' = x.cos(B) - y.sen(B)
       data.x = (x * cos) - (y * sen);
       // y' = y.sen(B) + x.cos(B)
       data.y = (x * cos) + (y * sen);
 
-      //Volta para os pontos com o calculo de rotação feito
+      // Volta para os pontos com o calculo de rotação feito
       data.x = Number((data.x + Number(this.rotateAngleX)).toFixed(2));
       data.y = Number((data.y + Number(this.rotateAngleY)).toFixed(2));
 
-      //Calcular polar
+      // Calcular polar
       data.radius = this.calculatePolarCoordinatesRadius(data.x, data.y) || 0;
       data.angle = this.calculatePolarCoordinatesAngle(data.x, data.y) || 0;
     }
@@ -181,7 +176,7 @@ export class AppComponent {
   /**
    * Limpa as variaveis de entrada
    */
-  private clearInputs(){
+  private clearInputs() {
     this.inputPositionX = 0;
     this.inputPositionY = 0;
     this.angleInput = 0;
