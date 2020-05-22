@@ -91,7 +91,9 @@ export class AppComponent {
    */
   private calculatePolarCoordinatesAngle(x: number, y: number): number {
     // Calculo equivalente a linha abaixo: tag(teta)
-    return Number((Math.atan2(y, x) * 180 / Math.PI).toFixed(2)) || 0;
+    let theta = Number((Math.atan2(y, x) * 180 / Math.PI).toFixed(2)) || 0;
+    if (theta < 0) theta = 360 + theta; // range [0, 360)
+    return theta
   }
 
   /**
@@ -155,7 +157,7 @@ export class AppComponent {
       // x' = x.cos(B) - y.sen(B)
       data.x = (x * cos) - (y * sen);
       // y' = y.sen(B) + x.cos(B)
-      data.y = (x * cos) + (y * sen);
+      data.y = (x * sen) + (y * cos);
 
       // Volta para os pontos com o calculo de rotação feito
       data.x = Number((data.x + Number(this.rotateAngleX)).toFixed(2));
