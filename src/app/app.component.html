@@ -24,7 +24,7 @@
                         </div>
 
                         <div class="flex w-full mt-2">
-                            <ngt-input class="block w-6/12 px-2" mask='decimal' name='speedInput'
+                            <ngt-input class="block w-6/12 px-2" name='speedInput'
                                 [(ngModel)]="speedInput" label='Velocidade'></ngt-input>
                             <ngt-input class="block w-6/12 px-2" name='directionInput' [(ngModel)]="directionInput"
                                 label='Direção'></ngt-input>
@@ -40,9 +40,9 @@
                     <div class="flex flex-col w-full h-auto">
                         <div class="flex flex-col w-full h-auto border rounded-lg px-4 py-4 bg-gray-100">
                             <div class="flex w-full">
-                                <ngt-input class="block w-6/12 px-2" mask='decimal' name='translandePositionX'
+                                <ngt-input class="block w-6/12 px-2" name='translandePositionX'
                                     [(ngModel)]="translandePositionX" label='X'></ngt-input>
-                                <ngt-input class="block w-6/12 px-2" mask='decimal' name='translandePositionY'
+                                <ngt-input class="block w-6/12 px-2" name='translandePositionY'
                                     [(ngModel)]="translandePositionY" label='Y'></ngt-input>
                             </div>
 
@@ -53,9 +53,9 @@
 
                         <div class="flex flex-col w-full h-auto border rounded-lg mt-4 px-4 py-4 bg-gray-100">
                             <div class="flex w-full">
-                                <ngt-input class="block w-6/12 px-2" mask='decimal' name='staggerPositionX'
+                                <ngt-input class="block w-6/12 px-2" name='staggerPositionX'
                                     [(ngModel)]="staggerPositionX" label='X'></ngt-input>
-                                <ngt-input class="block w-6/12 px-2" mask='decimal' name='staggerPositionY'
+                                <ngt-input class="block w-6/12 px-2" name='staggerPositionY'
                                     [(ngModel)]="staggerPositionY" label='Y'></ngt-input>
                             </div>
 
@@ -66,13 +66,13 @@
                     </div>
 
                     <div class="flex flex-col w-full h-auto border rounded-lg mt-4 px-4 py-4 bg-gray-100">
-                        <ngt-input class="block w-full px-2" mask='decimal' name='rotateAngle' [(ngModel)]="rotateAngle"
+                        <ngt-input class="block w-full px-2" name='rotateAngle' [(ngModel)]="rotateAngle"
                             label='Ângulo'></ngt-input>
 
                         <div class="flex w-full mt-2">
-                            <ngt-input class="block w-6/12 px-2" mask='decimal' name='rotateAngleX'
+                            <ngt-input class="block w-6/12 px-2" name='rotateAngleX'
                                 [(ngModel)]="rotateAngleX" label='X'></ngt-input>
-                            <ngt-input class="block w-6/12 px-2" mask='decimal' name='rotateAngleY'
+                            <ngt-input class="block w-6/12 px-2" name='rotateAngleY'
                                 [(ngModel)]="rotateAngleY" label='Y'></ngt-input>
                         </div>
 
@@ -136,7 +136,7 @@
             <p class="font-semibold mb-2 w-full text-center">Funções de Rastreamento:</p>
             <div class="flex w-full">
                 <div class="flex flex-col w-4/12 h-auto border rounded-lg px-4 py-4 bg-gray-100">
-                    <ngt-input class="block w-full px-2" mask='decimal' name='airportDistance'
+                    <ngt-input class="block w-full px-2" name='airportDistance'
                         [(ngModel)]="airportDistance" label='Distância mínima'></ngt-input>
 
                     <ngt-button class="block mt-4 px-2 hover:opacity-75" type='danger'
@@ -146,7 +146,7 @@
                 </div>
 
                 <div class="flex flex-col w-4/12 h-auto border rounded-lg mx-4 px-4 py-4 bg-gray-100">
-                    <ngt-input class="block w-full px-2" mask='decimal' name='nearbyPlanesDistance'
+                    <ngt-input class="block w-full px-2" name='nearbyPlanesDistance'
                         [(ngModel)]="nearbyPlanesDistance" label='Distância mínima'></ngt-input>
 
                     <ngt-button class="block mt-4 px-2 hover:opacity-75" type='danger' (click)='trackNearbyPlanes()'>
@@ -155,7 +155,7 @@
                 </div>
 
                 <div class="flex flex-col w-4/12 h-auto border rounded-lg px-4 py-4 bg-gray-100">
-                    <ngt-input class="block w-full px-2" mask='decimal' name='collisionDistance'
+                    <ngt-input class="block w-full px-2" name='collisionDistance'
                         [(ngModel)]="collisionDistance" label='Distância mínima'></ngt-input>
 
                     <ngt-button class="block mt-4 px-2 hover:opacity-75" type='danger' (click)='trackCollision()'>
