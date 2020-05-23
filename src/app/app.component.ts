@@ -1,5 +1,8 @@
-import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NgtDatatableComponent, NgtDatatableType } from 'ng-tailwind';
+
+import { Airplane } from './resources/airplane';
+
 
 @Component({
   selector: 'app-root',
@@ -7,7 +10,7 @@ import { NgtDatatableComponent, NgtDatatableType } from 'ng-tailwind';
   styleUrls: ['./app.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class AppComponent {
+export class AppComponent implements AfterViewInit {
   @ViewChild('ngtDatatable') ngtDatatable: NgtDatatableComponent;
 
   /** Input Data */
@@ -38,7 +41,14 @@ export class AppComponent {
 
   /** DataGrid */
   public ngtDatatableType: NgtDatatableType = NgtDatatableType.fixed;
-  public tableData: Array<DataGridModel> = [];
+  public tableData: Array<Airplane> = [];
+
+  constructor(private changeDetector: ChangeDetectorRef) { }
+
+  public ngAfterViewInit() {
+    this.tableData = JSON.parse(localStorage.getItem('tableData')) ? JSON.parse(localStorage.getItem('tableData')) : [];
+    this.changeDetector.detectChanges();
+  }
 
   /**
    * Responsavel por salvar os dados digitados pelo usuario
@@ -52,11 +62,14 @@ export class AppComponent {
       radius: this.radiusInput,
       angle: this.angleInput,
       speed: this.speedInput,
-      direction: this.directionInput
+      direction: this.directionInput,
+      translation: null,
     });
 
-    this.clearInputs();
+    localStorage.removeItem('tableData');
+    localStorage.setItem('tableData', JSON.stringify(this.tableData));
 
+    this.clearInputs();
   }
 
   /**
@@ -187,14 +200,4 @@ export class AppComponent {
     this.directionInput = 0;
   }
 
-}
-
-export class DataGridModel {
-  public id: number;
-  public x: number;
-  public y: number;
-  public radius: number;
-  public angle: number;
-  public speed: number;
-  public direction: number;
 }

@@ -6,26 +6,22 @@
                     <p class="font-semibold mb-1 w-full text-center">Entrada de Dados:</p>
                     <div class="flex flex-col w-full h-auto border rounded-lg px-4 py-4 bg-gray-100">
                         <div class="flex w-full">
-                            <ngt-input class="block w-6/12 px-2" name='inputPositionX'
-                                [(ngModel)]="inputPositionX" label='X' [jit]='true'
-                                (keyup)='calculatePolarCoordinates()'></ngt-input>
-                            <ngt-input class="block w-6/12 px-2" name='inputPositionY'
-                                [(ngModel)]="inputPositionY" label='Y' [jit]='true'
-                                (keyup)='calculatePolarCoordinates()'></ngt-input>
+                            <ngt-input class="block w-6/12 px-2" name='inputPositionX' [(ngModel)]="inputPositionX"
+                                label='X' [jit]='true' (keyup)='calculatePolarCoordinates()'></ngt-input>
+                            <ngt-input class="block w-6/12 px-2" name='inputPositionY' [(ngModel)]="inputPositionY"
+                                label='Y' [jit]='true' (keyup)='calculatePolarCoordinates()'></ngt-input>
                         </div>
 
                         <div class="flex w-full mt-2">
-                            <ngt-input class="block w-6/12 px-2" name='radiusInput'
-                                [(ngModel)]="radiusInput" label='Raio' [jit]='true'
-                                (keyup)='calculateCartesianCoordinates()'></ngt-input>
-                            <ngt-input class="block w-6/12 px-2" name='angleInput'
-                                [(ngModel)]="angleInput" label='Ângulo' [jit]='true'
-                                (keyup)='calculateCartesianCoordinates()'></ngt-input>
+                            <ngt-input class="block w-6/12 px-2" name='radiusInput' [(ngModel)]="radiusInput"
+                                label='Raio' [jit]='true' (keyup)='calculateCartesianCoordinates()'></ngt-input>
+                            <ngt-input class="block w-6/12 px-2" name='angleInput' [(ngModel)]="angleInput"
+                                label='Ângulo' [jit]='true' (keyup)='calculateCartesianCoordinates()'></ngt-input>
                         </div>
 
                         <div class="flex w-full mt-2">
-                            <ngt-input class="block w-6/12 px-2" name='speedInput'
-                                [(ngModel)]="speedInput" label='Velocidade'></ngt-input>
+                            <ngt-input class="block w-6/12 px-2" name='speedInput' [(ngModel)]="speedInput"
+                                label='Velocidade'></ngt-input>
                             <ngt-input class="block w-6/12 px-2" name='directionInput' [(ngModel)]="directionInput"
                                 label='Direção'></ngt-input>
                         </div>
@@ -70,10 +66,10 @@
                             label='Ângulo'></ngt-input>
 
                         <div class="flex w-full mt-2">
-                            <ngt-input class="block w-6/12 px-2" name='rotateAngleX'
-                                [(ngModel)]="rotateAngleX" label='X'></ngt-input>
-                            <ngt-input class="block w-6/12 px-2" name='rotateAngleY'
-                                [(ngModel)]="rotateAngleY" label='Y'></ngt-input>
+                            <ngt-input class="block w-6/12 px-2" name='rotateAngleX' [(ngModel)]="rotateAngleX"
+                                label='X'></ngt-input>
+                            <ngt-input class="block w-6/12 px-2" name='rotateAngleY' [(ngModel)]="rotateAngleY"
+                                label='Y'></ngt-input>
                         </div>
 
                         <ngt-button class="block mt-4 px-2 hover:opacity-75" type='info' (click)='rotate()'>
@@ -136,8 +132,8 @@
             <p class="font-semibold mb-2 w-full text-center">Funções de Rastreamento:</p>
             <div class="flex w-full">
                 <div class="flex flex-col w-4/12 h-auto border rounded-lg px-4 py-4 bg-gray-100">
-                    <ngt-input class="block w-full px-2" name='airportDistance'
-                        [(ngModel)]="airportDistance" label='Distância mínima'></ngt-input>
+                    <ngt-input class="block w-full px-2" name='airportDistance' [(ngModel)]="airportDistance"
+                        label='Distância mínima'></ngt-input>
 
                     <ngt-button class="block mt-4 px-2 hover:opacity-75" type='danger'
                         (click)='trackPlanesNearAirport()'>
@@ -146,8 +142,8 @@
                 </div>
 
                 <div class="flex flex-col w-4/12 h-auto border rounded-lg mx-4 px-4 py-4 bg-gray-100">
-                    <ngt-input class="block w-full px-2" name='nearbyPlanesDistance'
-                        [(ngModel)]="nearbyPlanesDistance" label='Distância mínima'></ngt-input>
+                    <ngt-input class="block w-full px-2" name='nearbyPlanesDistance' [(ngModel)]="nearbyPlanesDistance"
+                        label='Distância mínima'></ngt-input>
 
                     <ngt-button class="block mt-4 px-2 hover:opacity-75" type='danger' (click)='trackNearbyPlanes()'>
                         <span class="w-full text-center">Aviões Próximos</span>
@@ -155,8 +151,8 @@
                 </div>
 
                 <div class="flex flex-col w-4/12 h-auto border rounded-lg px-4 py-4 bg-gray-100">
-                    <ngt-input class="block w-full px-2" name='collisionDistance'
-                        [(ngModel)]="collisionDistance" label='Distância mínima'></ngt-input>
+                    <ngt-input class="block w-full px-2" name='collisionDistance' [(ngModel)]="collisionDistance"
+                        label='Distância mínima'></ngt-input>
 
                     <ngt-button class="block mt-4 px-2 hover:opacity-75" type='danger' (click)='trackCollision()'>
                         <span class="w-full text-center">Rota de Colisão</span>
