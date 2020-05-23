@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { NgtSvgModule } from 'ng-tailwind';
 
 import { RadarComponent } from './radar.component';
 
@@ -9,7 +10,8 @@ import { RadarComponent } from './radar.component';
   declarations: [RadarComponent],
   exports: [RadarComponent],
   imports: [
-    CommonModule
+    CommonModule,
+    NgtSvgModule
   ]
 })
 export class RadarModule { }

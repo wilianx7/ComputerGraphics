@@ -6,6 +6,15 @@
         </ng-container>
     </div>
 
-    <div class="px-1 py-1 rounded-full bg-gray-700 absolute top-0" [ngStyle]="{ 'transform': middlePointTranslation }" #middlePoint>
+    <div class="px-1 py-1 rounded-full bg-gray-700 absolute top-0" [ngStyle]="{ 'transform': middlePointTranslation }"
+        #middlePoint>
     </div>
+
+    <ng-container *ngFor="let data of tableData">
+        <ng-container *ngIf="data.translation">
+            <div class="absolute top-0 text-gray-600 text-2xl" [ngStyle]="{ 'transform': data.translation }">
+                <ngt-svg src='assets/images/icons/airplane.svg'></ngt-svg>
+            </div>
+        </ng-container>
+    </ng-container>
 </div>
