@@ -21,7 +21,7 @@
     "@angular/router": "~9.0.0",
     "@ng-select/ng-select": "^3.7.3",
     "flatpickr": "^4.6.3",
-    "ng-tailwind": "0.0.108",
+    "ng-tailwind": "0.0.127",
     "ng2-flatpickr": "^9.0.0",
     "ngx-dropzone": "^2.2.2",
     "rxjs": "~6.5.4",
