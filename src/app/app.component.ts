@@ -1,6 +1,7 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NgtDatatableComponent, NgtDatatableType } from 'ng-tailwind';
 
+import { RadarComponent } from './components/radar/radar.component';
 import { Airplane } from './resources/airplane';
 
 
@@ -12,6 +13,7 @@ import { Airplane } from './resources/airplane';
 })
 export class AppComponent implements AfterViewInit {
   @ViewChild('ngtDatatable') ngtDatatable: NgtDatatableComponent;
+  @ViewChild(RadarComponent) radarComponent: RadarComponent;
 
   /** Input Data */
   public inputPositionX: number;
@@ -66,10 +68,7 @@ export class AppComponent implements AfterViewInit {
       translation: null,
     });
 
-    localStorage.removeItem('tableData');
-    localStorage.setItem('tableData', JSON.stringify(this.tableData));
-
-    this.clearInputs();
+    this.updateTableData();
   }
 
   /**
@@ -129,28 +128,32 @@ export class AppComponent implements AfterViewInit {
    * Função para translandar os selecionados
    */
   public translande() {
-    for (const data of this.tableData) {
-      data.x = Number((Number(data.x) + Number(this.translandePositionX)).toFixed(2));
-      data.y = Number((Number(data.y) + Number(this.translandePositionY)).toFixed(2));
+    for (const data of this.ngtDatatable.selectedElements) {
+      data.reference.x = Number((Number(data.reference.x) + Number(this.translandePositionX)).toFixed(2));
+      data.reference.y = Number((Number(data.reference.y) + Number(this.translandePositionY)).toFixed(2));
 
       // Calcular polar
-      data.radius = this.calculatePolarCoordinatesRadius(data.x, data.y) || 0;
-      data.angle = this.calculatePolarCoordinatesAngle(data.x, data.y) || 0;
+      data.reference.radius = this.calculatePolarCoordinatesRadius(data.reference.x, data.reference.y) || 0;
+      data.reference.angle = this.calculatePolarCoordinatesAngle(data.reference.x, data.reference.y) || 0;
     }
+
+    this.updateTableData();
   }
 
   /**
    * Função para escalonar os selecionados
    */
   public stagger() {
-    for (const data of this.tableData) {
-      data.x = Number((Number(data.x) * Number(this.staggerPositionX / 100)).toFixed(2));
-      data.y = Number((Number(data.y) * Number(this.staggerPositionY / 100)).toFixed(2));
+    for (const data of this.ngtDatatable.selectedElements) {
+      data.reference.x = Number((Number(data.reference.x) * Number(this.staggerPositionX / 100)).toFixed(2));
+      data.reference.y = Number((Number(data.reference.y) * Number(this.staggerPositionY / 100)).toFixed(2));
 
       // Calcular polar
-      data.radius = this.calculatePolarCoordinatesRadius(data.x, data.y) || 0;
-      data.angle = this.calculatePolarCoordinatesAngle(data.x, data.y) || 0;
+      data.reference.radius = this.calculatePolarCoordinatesRadius(data.reference.x, data.reference.y) || 0;
+      data.reference.angle = this.calculatePolarCoordinatesAngle(data.reference.x, data.reference.y) || 0;
     }
+
+    this.updateTableData();
   }
 
   /**
@@ -161,25 +164,27 @@ export class AppComponent implements AfterViewInit {
     const cos = Number((Math.cos(this.rotateAngle / (180 / Math.PI))).toFixed(2));
     const sen = Number((Math.sin(this.rotateAngle / (180 / Math.PI))).toFixed(2));
     // Percorre todos os dados da grid
-    for (const data of this.tableData) {
+    for (const data of this.ngtDatatable.selectedElements) {
       // Armazena pois os valores se alteram
-      const x = Number(data.x) - Number(this.rotateAngleX);
-      const y = Number(data.y) - Number(this.rotateAngleY);
+      const x = Number(data.reference.x) - Number(this.rotateAngleX);
+      const y = Number(data.reference.y) - Number(this.rotateAngleY);
 
       // Função equivalente as linhas abaixos
       // x' = x.cos(B) - y.sen(B)
-      data.x = (x * cos) - (y * sen);
+      data.reference.x = (x * cos) - (y * sen);
       // y' = y.sen(B) + x.cos(B)
-      data.y = (x * sen) + (y * cos);
+      data.reference.y = (x * sen) + (y * cos);
 
       // Volta para os pontos com o calculo de rotação feito
-      data.x = Number((data.x + Number(this.rotateAngleX)).toFixed(2));
-      data.y = Number((data.y + Number(this.rotateAngleY)).toFixed(2));
+      data.reference.x = Number((data.reference.x + Number(this.rotateAngleX)).toFixed(2));
+      data.reference.y = Number((data.reference.y + Number(this.rotateAngleY)).toFixed(2));
 
       // Calcular polar
-      data.radius = this.calculatePolarCoordinatesRadius(data.x, data.y) || 0;
-      data.angle = this.calculatePolarCoordinatesAngle(data.x, data.y) || 0;
+      data.reference.radius = this.calculatePolarCoordinatesRadius(data.reference.x, data.reference.y) || 0;
+      data.reference.angle = this.calculatePolarCoordinatesAngle(data.reference.x, data.reference.y) || 0;
     }
+
+    this.updateTableData();
   }
 
   public trackPlanesNearAirport() { }
@@ -198,6 +203,27 @@ export class AppComponent implements AfterViewInit {
     this.radiusInput = 0;
     this.speedInput = 0;
     this.directionInput = 0;
+
+    this.translandePositionX = 0;
+    this.translandePositionY = 0;
+
+    this.staggerPositionX = 0;
+    this.staggerPositionY = 0;
+
+    this.rotateAngle = 0;
+    this.rotateAngleX = 0;
+    this.rotateAngleY = 0;
+
+    this.airportDistance = 0;
+    this.nearbyPlanesDistance = 0;
+    this.collisionDistance = 0;
   }
 
+  private updateTableData() {
+    localStorage.removeItem('tableData');
+    localStorage.setItem('tableData', JSON.stringify(this.tableData));
+
+    this.radarComponent.loadTableData();
+    this.clearInputs();
+  }
 }
