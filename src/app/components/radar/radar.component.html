@@ -12,7 +12,7 @@
 
     <ng-container *ngFor="let data of tableData">
         <ng-container *ngIf="data.translation">
-            <div class="absolute top-0 text-gray-600 text-2xl" [ngStyle]="{ 'transform': data.translation }">
+            <div class="block absolute top-0 text-gray-600 text-xl" [ngStyle]="{ 'transform': data.translation }">
                 <ngt-svg src='assets/images/icons/airplane.svg'></ngt-svg>
             </div>
         </ng-container>

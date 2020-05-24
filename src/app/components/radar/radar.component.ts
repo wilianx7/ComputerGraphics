@@ -1,15 +1,4 @@
-import {
-  AfterViewInit,
-  ChangeDetectorRef,
-  Component,
-  ElementRef,
-  QueryList,
-  SkipSelf,
-  ViewChild,
-  ViewChildren,
-  ViewContainerRef,
-} from '@angular/core';
-import { AppComponent } from 'src/app/app.component';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
 import { Airplane } from 'src/app/resources/airplane';
 import { Square } from 'src/app/resources/square';
 
@@ -21,7 +10,6 @@ import { Square } from 'src/app/resources/square';
 export class RadarComponent implements AfterViewInit {
   @ViewChild('radarContainer') radarContainer: ElementRef;
   @ViewChild('middlePoint') middlePointElement: ElementRef;
-  @ViewChildren('airplaneTemplate', { read: ViewContainerRef }) public airplaneContainers: QueryList<ViewContainerRef>;
 
   public tableData: Array<Airplane> = [];
   public radarSquares: Array<Square>;
@@ -30,10 +18,7 @@ export class RadarComponent implements AfterViewInit {
   public middlePointXPosition: number;
   public middlePointYPosition: number;
 
-  constructor(
-    @SkipSelf() private appComponent: AppComponent,
-    private changeDetector: ChangeDetectorRef,
-  ) { }
+  constructor(private changeDetector: ChangeDetectorRef) { }
 
   ngAfterViewInit() {
     setTimeout(() => {
@@ -48,13 +33,32 @@ export class RadarComponent implements AfterViewInit {
   }
 
   public plotAirplane(airplane: Airplane) {
-    const xTranlation = this.middlePointXPosition + ((this.squareWidth - 6) * airplane.x);
-    const yTranlation = this.middlePointYPosition + (((this.squareWidth - 10) * airplane.y) * -1);
+    let xTranlation = this.middlePointXPosition + (((this.squareWidth)) * airplane.x);
+    let yTranlation = this.middlePointYPosition + ((((this.squareWidth)) * airplane.y) * -1);
+
+    if (airplane.x > 0) {
+      xTranlation -= this.squareWidth * 0.60527249084;
+    } else if (airplane.x < 0) {
+      xTranlation += this.squareWidth * 0.30263624542;
+    } else {
+      xTranlation -= this.squareWidth * 0.24210899634;
+    }
+
+    if (airplane.y > 0) {
+      yTranlation -= this.squareWidth;
+      yTranlation += this.squareWidth * 0.90790873626;
+    } else if (airplane.y < 0) {
+      yTranlation += this.squareWidth;
+      yTranlation -= this.squareWidth * 1.05922685897;
+    } else {
+      yTranlation -= this.squareWidth * 0.15131812271;
+    }
+
     airplane.translation = `translate(${xTranlation + 'px'}, ${yTranlation + 'px'})`;
   }
 
-  private loadTableData() {
-    this.tableData = this.appComponent.tableData;
+  public loadTableData() {
+    this.tableData = JSON.parse(localStorage.getItem('tableData')) ? JSON.parse(localStorage.getItem('tableData')) : [];
     this.changeDetector.detectChanges();
 
     this.tableData.forEach((airplane) => {
