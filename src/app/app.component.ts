@@ -71,6 +71,11 @@ export class AppComponent implements AfterViewInit {
     this.updateTableData();
   }
 
+  public removeAirplane(airplane: Airplane) {
+    this.tableData = this.tableData.filter(element => element.id != airplane.id);
+    this.updateTableData();
+  }
+
   /**
    * Calcula as coordenadas polares de acordo com as coordenadas cartesianas
    * @param x Coordenada cartesiana X
@@ -197,26 +202,26 @@ export class AppComponent implements AfterViewInit {
    * Limpa as variaveis de entrada
    */
   private clearInputs() {
-    this.inputPositionX = 0;
-    this.inputPositionY = 0;
-    this.angleInput = 0;
-    this.radiusInput = 0;
-    this.speedInput = 0;
-    this.directionInput = 0;
+    this.inputPositionX = undefined;
+    this.inputPositionY = undefined;
+    this.angleInput = undefined;
+    this.radiusInput = undefined;
+    this.speedInput = undefined;
+    this.directionInput = undefined;
 
-    this.translandePositionX = 0;
-    this.translandePositionY = 0;
+    this.translandePositionX = undefined;
+    this.translandePositionY = undefined;
 
-    this.staggerPositionX = 0;
-    this.staggerPositionY = 0;
+    this.staggerPositionX = undefined;
+    this.staggerPositionY = undefined;
 
-    this.rotateAngle = 0;
-    this.rotateAngleX = 0;
-    this.rotateAngleY = 0;
+    this.rotateAngle = undefined;
+    this.rotateAngleX = undefined;
+    this.rotateAngleY = undefined;
 
-    this.airportDistance = 0;
-    this.nearbyPlanesDistance = 0;
-    this.collisionDistance = 0;
+    this.airportDistance = undefined;
+    this.nearbyPlanesDistance = undefined;
+    this.collisionDistance = undefined;
   }
 
   private updateTableData() {

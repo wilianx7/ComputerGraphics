@@ -3,7 +3,14 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgtButtonModule, NgtDatatableModule, NgtHttpService, NgtInputModule } from 'ng-tailwind';
+import {
+  NgtActionModule,
+  NgtButtonModule,
+  NgtDatatableModule,
+  NgtHttpService,
+  NgtInputModule,
+  NgtStylizableModule,
+} from 'ng-tailwind';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -24,6 +31,8 @@ import { HttpService } from './services/http.service';
     NgtInputModule,
     NgtDatatableModule,
     NgtButtonModule,
+    NgtActionModule,
+    NgtStylizableModule
   ],
   providers: [
     {
@@ -57,6 +66,17 @@ import { HttpService } from './services/http.service';
       useValue: {
         color: {
           bg: 'bg-blue-500',
+        }
+      }
+    },
+    {
+      provide: 'NgtActionStyle',
+      useValue: {
+        w: 'w-8',
+        h: 'h-8',
+        color: {
+          bg: 'bg-none hover:bg-blue-500',
+          text: 'text-gray-600 hover:text-white'
         }
       }
     },
