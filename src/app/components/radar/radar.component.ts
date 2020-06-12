@@ -21,10 +21,8 @@ export class RadarComponent implements AfterViewInit {
   constructor(private changeDetector: ChangeDetectorRef) { }
 
   ngAfterViewInit() {
-    setTimeout(() => {
-      this.loadSquares();
-      this.loadTableData();
-    }, 250);
+    this.loadSquares();
+    this.loadTableData();
 
     window.addEventListener('resize', () => {
       this.loadSquares();
@@ -37,7 +35,7 @@ export class RadarComponent implements AfterViewInit {
     let yTranlation = this.middlePointYPosition + ((((this.squareWidth)) * airplane.y) * -1);
 
     if (airplane.x > 0) {
-      xTranlation -= this.squareWidth * 0.60527249084;
+      xTranlation -= this.squareWidth * 0.70527249084;
     } else if (airplane.x < 0) {
       xTranlation += this.squareWidth * 0.30263624542;
     } else {
@@ -54,7 +52,11 @@ export class RadarComponent implements AfterViewInit {
       yTranlation -= this.squareWidth * 0.15131812271;
     }
 
-    airplane.translation = `translate(${xTranlation + 'px'}, ${yTranlation + 'px'})`;
+    if (this.squareWidth < 30) {
+      yTranlation += 10;
+    }
+
+    airplane.translation = `translate(${xTranlation + 'px'}, ${yTranlation + 'px'}) rotate(${(airplane.direction ? airplane.direction : 0) + 'deg'})`;
   }
 
   public loadTableData() {
@@ -64,12 +66,16 @@ export class RadarComponent implements AfterViewInit {
     this.tableData.forEach((airplane) => {
       this.plotAirplane(airplane);
     });
+
+    this.changeDetector.detectChanges();
   }
 
   private loadSquares() {
     const containerDimensions = this.radarContainer.nativeElement.getBoundingClientRect();
-    this.squareWidth = containerDimensions.width / 16;
-    const squareCount = Math.round(containerDimensions.height / this.squareWidth) * 16;
+
+    this.squareWidth = containerDimensions.width / 20;
+    const squareCount = Math.round(containerDimensions.height / this.squareWidth) * 20;
+
     this.radarSquares = new Array();
 
     for (let i = 0; i < squareCount; i++) {
