@@ -18,15 +18,23 @@ export class RadarComponent implements AfterViewInit {
   public middlePointXPosition: number;
   public middlePointYPosition: number;
 
+  private containerDimensions: any;
+
   constructor(private changeDetector: ChangeDetectorRef) { }
 
   ngAfterViewInit() {
     this.loadSquares();
-    this.loadTableData();
+
+    setTimeout(() => {
+      this.loadTableData();
+    }, 500);
 
     window.addEventListener('resize', () => {
       this.loadSquares();
-      this.loadTableData();
+
+      setTimeout(() => {
+        this.loadTableData();
+      }, 500);
     });
   }
 
@@ -52,8 +60,8 @@ export class RadarComponent implements AfterViewInit {
       yTranlation -= this.squareWidth * 0.15131812271;
     }
 
-    if (this.squareWidth < 30) {
-      yTranlation += 10;
+    if (this.containerDimensions.width >= 1400) {
+      yTranlation += 15;
     }
 
     airplane.translation = `translate(${xTranlation + 'px'}, ${yTranlation + 'px'}) rotate(${(airplane.direction ? airplane.direction : 0) + 'deg'})`;
@@ -71,24 +79,26 @@ export class RadarComponent implements AfterViewInit {
   }
 
   private loadSquares() {
-    const containerDimensions = this.radarContainer.nativeElement.getBoundingClientRect();
+    setTimeout(() => {
+      this.containerDimensions = this.radarContainer.nativeElement.getBoundingClientRect();
 
-    this.squareWidth = containerDimensions.width / 20;
-    const squareCount = Math.round(containerDimensions.height / this.squareWidth) * 20;
+      this.squareWidth = this.containerDimensions.width / (this.containerDimensions.width >= 1400 ? 42 : 30);
+      const squareCount = Math.round(this.containerDimensions.height / this.squareWidth) * (this.containerDimensions.width >= 1400 ? 42 : 30);
 
-    this.radarSquares = new Array();
+      this.radarSquares = new Array();
 
-    for (let i = 0; i < squareCount; i++) {
-      let square = new Square();
-      square.height = this.squareWidth + 'px';
-      square.width = this.squareWidth + 'px';
-      this.radarSquares.push(square);
-    }
+      for (let i = 0; i < squareCount; i++) {
+        let square = new Square();
+        square.height = this.squareWidth + 'px';
+        square.width = this.squareWidth + 'px';
+        this.radarSquares.push(square);
+      }
 
-    this.middlePointXPosition = (containerDimensions.width / 2) - (this.middlePointElement.nativeElement.offsetWidth / 2);
-    this.middlePointYPosition = (containerDimensions.height / 2) - (this.middlePointElement.nativeElement.offsetHeight / 2);
+      this.middlePointXPosition = (this.containerDimensions.width / 2) - (this.middlePointElement.nativeElement.offsetWidth / 2);
+      this.middlePointYPosition = (this.containerDimensions.height / 2) - (this.middlePointElement.nativeElement.offsetHeight / 2);
 
-    this.middlePointTranslation = `translate(${this.middlePointXPosition + 'px'}, ${this.middlePointYPosition + 'px'})`;
-    this.changeDetector.detectChanges();
+      this.middlePointTranslation = `translate(${this.middlePointXPosition + 'px'}, ${this.middlePointYPosition + 'px'})`;
+      this.changeDetector.detectChanges();
+    }, 500);
   }
 }

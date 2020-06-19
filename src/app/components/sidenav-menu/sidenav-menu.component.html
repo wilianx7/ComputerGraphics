@@ -1,0 +1,13 @@
+<ul class="list-reset w-full text-center md:text-left">
+    <ng-container *ngFor='let menu of menus'>
+        <li class="flex flex-col justify-center text-center text-white hover:bg-orange-400 cursor-pointer py-3 border-b"
+            (click)='menu.action()'>
+            <ngt-svg class="flex justify-center text-xl" src="assets/images/icons/{{ menu.icon }}">
+            </ngt-svg>
+
+            <span class="text-xs">
+                {{ menu.name }}
+            </span>
+        </li>
+    </ng-container>
+</ul>

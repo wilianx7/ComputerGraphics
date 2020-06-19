@@ -1,0 +1,40 @@
+<form #form='ngForm'>
+    <ngt-modal [customLayout]='true' w='max-w-screen-md' ngt-stylizable>
+        <ngt-modal-header class="w-full flex items-center">
+            <p class="font-semibold text-lg text-blue-500">Funções de Transformação</p>
+        </ngt-modal-header>
+
+        <ngt-modal-body style="max-height: 400px;">
+            <div class="flex flex-col w-full">
+                <ngt-input class="block w-full" name='inputPositionX' [jit]='true' [(ngModel)]="inputPositionX"
+                    label='Valor de X'>
+                </ngt-input>
+
+                <ngt-input class="mt-3 block w-full" name='inputPositionY' [jit]='true' [(ngModel)]="inputPositionY"
+                    label='Valor de Y'>
+                </ngt-input>
+
+                <ngt-input class="mt-3 block w-full" name='rotateAngle' [jit]='true' [(ngModel)]="rotateAngle"
+                    label='Ângulo'>
+                </ngt-input>
+            </div>
+        </ngt-modal-body>
+
+        <ngt-modal-footer class="block mt-4">
+            <ngt-button class="block w-4/12 mr-4 hover:opacity-75" type='success' [isDisabled]="rotateAngle"
+                (click)='translande()'>
+                <span class="w-full text-center">Translandar</span>
+            </ngt-button>
+
+            <ngt-button class="block w-4/12 mr-4 hover:opacity-75" type='info' [isDisabled]="rotateAngle"
+                (click)='stagger()'>
+                <span class="w-full text-center">Escalonar</span>
+            </ngt-button>
+
+            <ngt-button class="block w-4/12 hover:opacity-75" type='warning' [isDisabled]="!rotateAngle"
+                (click)='rotate()'>
+                <span class="w-full text-center">Rotacionar</span>
+            </ngt-button>
+        </ngt-modal-footer>
+    </ngt-modal>
+</form>

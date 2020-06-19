@@ -1,20 +1,11 @@
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {
-  NgtActionModule,
-  NgtButtonModule,
-  NgtDatatableModule,
-  NgtHttpService,
-  NgtInputModule,
-  NgtStylizableModule,
-} from 'ng-tailwind';
+import { NgtHttpService } from 'ng-tailwind';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { RadarModule } from './components/radar/radar.module';
+import { DefaultPageModule } from './pages/default-page/default-page.module';
 import { HttpService } from './services/http.service';
 
 @NgModule({
@@ -22,17 +13,10 @@ import { HttpService } from './services/http.service';
     AppComponent
   ],
   imports: [
-    CommonModule,
     BrowserModule,
-    FormsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    RadarModule,
-    NgtInputModule,
-    NgtDatatableModule,
-    NgtButtonModule,
-    NgtActionModule,
-    NgtStylizableModule
+    DefaultPageModule
   ],
   providers: [
     {

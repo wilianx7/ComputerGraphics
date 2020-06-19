@@ -1,5 +1,5 @@
-<div class="min-h-full min-w-full relative overflow-hidden" style="max-height: 550px;" #radarContainer>
-    <div class="flex flex-wrap w-full absolute top-0" style="max-height: 550px;">
+<div class="w-full relative overflow-hidden" style="height: 600px;" #radarContainer>
+    <div class="flex flex-wrap w-full h-full absolute top-0" style="height: 600px;">
         <ng-container *ngFor="let square of radarSquares">
             <div class="border" [ngStyle]="{ 'height': square.height, 'width': square.width }">
             </div>
@@ -10,10 +10,13 @@
         #middlePoint>
     </div>
 
-    <ng-container *ngFor="let data of tableData">
-        <ng-container *ngIf="data.translation">
-            <div class="block absolute top-0 text-gray-600 text-xl" [ngStyle]="{ 'transform': data.translation }">
-                <ngt-svg src='assets/images/icons/airplane.svg'></ngt-svg>
+    <ng-container *ngFor="let airplane of tableData">
+        <ng-container *ngIf="airplane.translation">
+            <div class="block absolute top-0 text-gray-600 text-xl" [ngStyle]="{ 'transform': airplane.translation }">
+                <div class="relative flex flex-col">
+                    <span class="text-xs font-semibold absolute top-0 -mt-4 self-center">{{ airplane.id }}</span>
+                    <ngt-svg src='assets/images/icons/airplane.svg'></ngt-svg>
+                </div>
             </div>
         </ng-container>
     </ng-container>

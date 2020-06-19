@@ -1,0 +1,28 @@
+<form #form='ngForm'>
+    <ngt-modal [customLayout]='true' w='max-w-screen-md' ngt-stylizable>
+        <ngt-modal-header class="w-full flex items-center">
+            <p class="font-semibold text-lg text-red-500">Funções de Rastreamento</p>
+        </ngt-modal-header>
+
+        <ngt-modal-body style="max-height: 400px;">
+            <div class="flex flex-col w-full">
+                <ngt-input class="block w-full" name='minDistance' [(ngModel)]="minDistance" label='Distância mínima'>
+                </ngt-input>
+            </div>
+        </ngt-modal-body>
+
+        <ngt-modal-footer class="block mt-4">
+            <ngt-button class="block w-4/12 mr-4 hover:opacity-75" type='info' (click)='trackPlanesNearAirport()'>
+                <span class="w-full text-center">Aviões Próximos ao Aeroporto</span>
+            </ngt-button>
+
+            <ngt-button class="block w-4/12 mr-4 hover:opacity-75" type='warning' (click)='trackNearbyPlanes()'>
+                <span class="w-full text-center">Aviões Próximos</span>
+            </ngt-button>
+
+            <ngt-button class="block w-4/12 hover:opacity-75" type='danger' (click)='trackCollision()'>
+                <span class="w-full text-center">Rota de Colisão</span>
+            </ngt-button>
+        </ngt-modal-footer>
+    </ngt-modal>
+</form>

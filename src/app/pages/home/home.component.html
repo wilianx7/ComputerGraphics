@@ -1,0 +1,65 @@
+<form>
+    <div class="h-screen w-full bg-gray-700 px-3 py-3 text-gray-800 overflow-hidden">
+        <div class="h-full w-full bg-white shadow border overflow-auto px-4 py-4">
+            <div class="flex flex-col w-full h-full">
+                <div class="flex flex-col w-full">
+                    <p class="font-semibold mb-1 w-full text-center">Radar:</p>
+                    <div class="flex w-full border">
+                        <app-radar class="block w-full" style="height: 600px;"></app-radar>
+                    </div>
+                </div>
+
+                <div class="flex flex-col w-full mt-6">
+                    <p class="font-semibold mb-1 mt-4 w-full text-center">DataGrid:</p>
+                    <div class="flex w-full h-full border rounded-lg overflow-auto">
+                        <ngt-datatable class="block min-w-full" type='fixed' #ngtDatatable>
+                            <thead ngt-thead>
+                                <tr ngt-tr>
+                                    <th class="w-1" ngt-th-check></th>
+                                    <th ngt-th>ID</th>
+                                    <th ngt-th>X</th>
+                                    <th ngt-th>Y</th>
+                                    <th ngt-th>Raio</th>
+                                    <th ngt-th>Ângulo</th>
+                                    <th ngt-th>Velocidade</th>
+                                    <th ngt-th>Direção</th>
+                                    <th ngt-th>Ações</th>
+                                </tr>
+                            </thead>
+
+                            <tbody ngt-tbody>
+                                <tr [evenStripped]='true' ngt-tr *ngFor='let airplane of getTableData()'>
+                                    <td [reference]='airplane' ngt-td-check></td>
+                                    <td ngt-td>{{ airplane.id }}</td>
+                                    <td ngt-td>{{ airplane.x }}</td>
+                                    <td ngt-td>{{ airplane.y }}</td>
+                                    <td ngt-td>{{ airplane.radius }}</td>
+                                    <td ngt-td>{{ airplane.angle }}</td>
+                                    <td ngt-td>{{ airplane.speed }}</td>
+                                    <td ngt-td>{{ airplane.direction }}</td>
+                                    <td ngt-td>
+                                        <ngt-action class="text-xl" icon="assets/images/icons/trash.svg"
+                                            color.text="text-gray-600 hover:text-white" color.bg='hover:bg-red-500'
+                                            title="Excluir" ngt-stylizable (click)='removeAirplane(airplane)'>
+                                        </ngt-action>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </ngt-datatable>
+                    </div>
+                </div>
+
+                <div class="flex flex-col w-full mt-6">
+                    <p class="font-semibold mb-1 w-full text-center">Relatório:</p>
+                    <div class="flex w-full h-full border rounded-lg">
+                        <!-- Relatório -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<input-data-modal></input-data-modal>
+<transformation-functions-modal></transformation-functions-modal>
+<tracking-functions-modal></tracking-functions-modal>

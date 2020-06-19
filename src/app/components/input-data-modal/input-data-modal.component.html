@@ -1,0 +1,44 @@
+<form #form='ngForm'>
+    <ngt-modal [customLayout]='true' w='max-w-screen-md' ngt-stylizable>
+        <ngt-modal-header class="w-full flex items-center">
+            <p class="font-semibold text-lg text-green-500">Entrada de Dados</p>
+        </ngt-modal-header>
+
+        <ngt-modal-body style="max-height: 400px;">
+            <div class="flex flex-col w-full">
+                <div class="flex w-full">
+                    <ngt-input class="block w-6/12 mr-4" name='inputPositionX' [(ngModel)]="inputPositionX" label='X'
+                        [jit]='true' (keyup)='calculatePolarCoordinates()'></ngt-input>
+                    <ngt-input class="block w-6/12" name='inputPositionY' [(ngModel)]="inputPositionY" label='Y'
+                        [jit]='true' (keyup)='calculatePolarCoordinates()'></ngt-input>
+                </div>
+
+                <div class="flex w-full mt-2">
+                    <ngt-input class="block w-6/12 mr-4" name='radiusInput' [(ngModel)]="radiusInput" label='Raio'
+                        [jit]='true' (keyup)='calculateCartesianCoordinates()'></ngt-input>
+                    <ngt-input class="block w-6/12" name='angleInput' [(ngModel)]="angleInput" label='Ângulo'
+                        [jit]='true' (keyup)='calculateCartesianCoordinates()'></ngt-input>
+                </div>
+
+                <div class="flex w-full mt-2">
+                    <ngt-input class="block w-6/12 mr-4" name='speedInput' [(ngModel)]="speedInput" label='Velocidade'>
+                    </ngt-input>
+                    <ngt-input class="block w-6/12" name='directionInput' [(ngModel)]="directionInput" label='Direção'>
+                    </ngt-input>
+                </div>
+            </div>
+        </ngt-modal-body>
+
+        <ngt-modal-footer class="block mt-4">
+            <ngt-button class="block w-6/12 mr-6 hover:opacity-75" type='success' (click)='saveInputData()'>
+                <span class="w-full text-center">Salvar</span>
+            </ngt-button>
+
+            <ngt-button class="block w-6/12 hover:opacity-75" [noSubmit]='true' color.bg='hover:bg-red-500'
+                color.text='text-gray-800 hover:text-white' border='border' px='px-4' py='py-0' ngt-stylizable
+                (click)='closeModal()'>
+                <span class="w-full text-center self-center">Cancelar</span>
+            </ngt-button>
+        </ngt-modal-footer>
+    </ngt-modal>
+</form>
