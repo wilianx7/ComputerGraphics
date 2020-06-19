@@ -46,6 +46,7 @@ export class TransformationFunctionsModalComponent {
     }
 
     this.homeComponent.updateTableData();
+    this.closeModal();
   }
 
   /**
@@ -62,6 +63,7 @@ export class TransformationFunctionsModalComponent {
     }
 
     this.homeComponent.updateTableData();
+    this.closeModal();
   }
 
   /**
@@ -94,6 +96,7 @@ export class TransformationFunctionsModalComponent {
     }
 
     this.homeComponent.updateTableData();
+    this.closeModal();
   }
 
   /**
