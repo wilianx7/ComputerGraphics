@@ -43,7 +43,7 @@ export class InputDataModalComponent {
 
     // Adiciona as variaveis para salvar no array vinculado a Grid
     HomeComponent.tableData.push({
-      id: HomeComponent.tableData.length + 1,
+      id: Math.max.apply(Math, HomeComponent.tableData.map(element => element.id)) + 1,
       x: this.inputPositionX,
       y: this.inputPositionY,
       radius: this.radiusInput,
