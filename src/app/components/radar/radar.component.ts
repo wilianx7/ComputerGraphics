@@ -43,28 +43,32 @@ export class RadarComponent implements AfterViewInit {
     let yTranlation = this.middlePointYPosition + ((((this.squareWidth)) * airplane.y) * -1);
 
     if (airplane.x > 0) {
-      xTranlation -= this.squareWidth * 0.70527249084;
+      xTranlation -= this.squareWidth * 0.7;
     } else if (airplane.x < 0) {
-      xTranlation += this.squareWidth * 0.30263624542;
+      xTranlation += this.squareWidth * 0.3;
     } else {
-      xTranlation -= this.squareWidth * 0.24210899634;
-    }
-
-    if (airplane.y > 0) {
-      yTranlation -= this.squareWidth;
-      yTranlation += this.squareWidth * 0.90790873626;
-    } else if (airplane.y < 0) {
-      yTranlation += this.squareWidth;
-      yTranlation -= this.squareWidth * 1.05922685897;
-    } else {
-      yTranlation -= this.squareWidth * 0.15131812271;
+      xTranlation -= this.squareWidth * 0.2;
     }
 
     if (this.containerDimensions.width >= 1400) {
-      yTranlation += 15;
+      if (airplane.y > 0) {
+        yTranlation += this.squareWidth * 0.2;
+      } else if (airplane.y < 0) {
+        yTranlation += this.squareWidth * 0.5;
+      } else {
+        yTranlation -= this.squareWidth * 0.15;
+      }
+    } else {
+      if (airplane.y > 0) {
+        yTranlation -= this.squareWidth * 0.2;
+      } else if (airplane.y < 0) {
+        yTranlation -= this.squareWidth * 0.05;
+      } else {
+        yTranlation -= this.squareWidth * 0.15;
+      }
     }
 
-    airplane.translation = `translate(${xTranlation + 'px'}, ${yTranlation + 'px'}) rotate(${(airplane.direction ? airplane.direction : 0) + 'deg'})`;
+    airplane.translation = `translate(${xTranlation + 'px'}, ${yTranlation + 'px'}) rotate(${(this.getAirplaneDirection(airplane)) + 'deg'})`;
   }
 
   public loadTableData() {
@@ -100,5 +104,21 @@ export class RadarComponent implements AfterViewInit {
       this.middlePointTranslation = `translate(${this.middlePointXPosition + 'px'}, ${this.middlePointYPosition + 'px'})`;
       this.changeDetector.detectChanges();
     }, 500);
+  }
+
+  private getAirplaneDirection(airplane: Airplane) {
+    if (airplane.direction) {
+      return ((parseInt(airplane.direction.toString())) * -1) + 45;
+    }
+
+    return 45;
+  }
+
+  public getTextRotation(airplane: Airplane) {
+    if (airplane.direction) {
+      return `rotate(${airplane.direction}deg)`;
+    }
+
+    return 'rotate(-45deg)';
   }
 }

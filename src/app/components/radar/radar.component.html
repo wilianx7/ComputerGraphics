@@ -14,7 +14,10 @@
         <ng-container *ngIf="airplane.translation">
             <div class="block absolute top-0 text-gray-600 text-xl" [ngStyle]="{ 'transform': airplane.translation }">
                 <div class="relative flex flex-col">
-                    <span class="text-xs font-semibold absolute top-0 -mt-4 self-center">{{ airplane.id }}</span>
+                    <span class="text-xs font-semibold absolute top-0 -mt-4 self-center"
+                        [ngStyle]="{ 'transform': getTextRotation(airplane) }">
+                        {{ airplane.id }}
+                    </span>
                     <ngt-svg src='assets/images/icons/airplane.svg'></ngt-svg>
                 </div>
             </div>
