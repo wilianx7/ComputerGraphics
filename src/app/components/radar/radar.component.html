@@ -6,8 +6,13 @@
         </ng-container>
     </div>
 
-    <div class="px-1 py-1 rounded-full bg-gray-700 absolute top-0" [ngStyle]="{ 'transform': middlePointTranslation }"
-        #middlePoint>
+    <div class="absolute top-0 h-full w-full">
+        <div class="flex justify-center relative h-full w-full">
+            <div class="absolute h-2 w-2 z-10 rounded-full bg-gray-700 self-center" #middlePoint></div>
+
+            <div class="absolute h-full bg-gray-500" style="width: 2px;"></div>
+            <div class="absolute w-full bg-gray-500 self-center" style="height: 2px;"></div>
+        </div>
     </div>
 
     <ng-container *ngFor="let airplane of tableData">

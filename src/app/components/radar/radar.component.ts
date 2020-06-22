@@ -14,7 +14,6 @@ export class RadarComponent implements AfterViewInit {
   public tableData: Array<Airplane> = [];
   public radarSquares: Array<Square>;
   public squareWidth: number;
-  public middlePointTranslation: string;
   public middlePointXPosition: number;
   public middlePointYPosition: number;
 
@@ -101,7 +100,6 @@ export class RadarComponent implements AfterViewInit {
       this.middlePointXPosition = (this.containerDimensions.width / 2) - (this.middlePointElement.nativeElement.offsetWidth / 2);
       this.middlePointYPosition = (this.containerDimensions.height / 2) - (this.middlePointElement.nativeElement.offsetHeight / 2);
 
-      this.middlePointTranslation = `translate(${this.middlePointXPosition + 'px'}, ${this.middlePointYPosition + 'px'})`;
       this.changeDetector.detectChanges();
     }, 500);
   }
