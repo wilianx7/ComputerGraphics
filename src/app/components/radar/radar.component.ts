@@ -26,14 +26,14 @@ export class RadarComponent implements AfterViewInit {
 
     setTimeout(() => {
       this.loadTableData();
-    }, 500);
+    }, 250);
 
     window.addEventListener('resize', () => {
       this.loadSquares();
 
       setTimeout(() => {
         this.loadTableData();
-      }, 500);
+      }, 250);
     });
   }
 
@@ -71,6 +71,7 @@ export class RadarComponent implements AfterViewInit {
   }
 
   public loadTableData() {
+    this.loadSquares();
     this.tableData = JSON.parse(localStorage.getItem('tableData')) ? JSON.parse(localStorage.getItem('tableData')) : [];
     this.changeDetector.detectChanges();
 
@@ -101,7 +102,7 @@ export class RadarComponent implements AfterViewInit {
       this.middlePointYPosition = (this.containerDimensions.height / 2) - (this.middlePointElement.nativeElement.offsetHeight / 2);
 
       this.changeDetector.detectChanges();
-    }, 500);
+    }, 250);
   }
 
   private getAirplaneDirection(airplane: Airplane) {
