@@ -43,7 +43,7 @@ export class InputDataModalComponent {
 
     // Adiciona as variaveis para salvar no array vinculado a Grid
     HomeComponent.tableData.push({
-      id: Math.max.apply(Math, HomeComponent.tableData.map(element => element.id)) + 1,
+      id: this.getNextId(),
       x: this.inputPositionX,
       y: this.inputPositionY,
       radius: this.radiusInput,
@@ -75,24 +75,24 @@ export class InputDataModalComponent {
    * Calcula as coordenadas cartesianas de acordo com as coordenadas polares
    */
   public calculateCartesianCoordinates() {
-  
+
     //Tratamento de angulos problematicos
-    switch(Number(this.angleInput)){
+    switch (Number(this.angleInput)) {
       //Caso possuir angulo 0, o 'x' varia de acordo com o raio
       case 0:
       case 360:
         this.inputPositionX = this.radiusInput;
         this.inputPositionY = 0;
-      break;
+        break;
       case 90:
         //Caso possuir angulo 90, o 'y' varia de acordo com o raio
         this.inputPositionY = this.radiusInput;
         this.inputPositionX = 0;
-      break;
+        break;
       case 180:
         this.inputPositionY = 0;
         this.inputPositionX = this.radiusInput * -1;
-      break;
+        break;
       default:
         // Seta os valores default
         this.angleInput = this.angleInput || 0;
@@ -117,5 +117,13 @@ export class InputDataModalComponent {
     this.radiusInput = undefined;
     this.speedInput = undefined;
     this.directionInput = undefined;
+  }
+
+  private getNextId() {
+    if (!HomeComponent.tableData || HomeComponent.tableData && !HomeComponent.tableData.length) {
+      return 1;
+    }
+
+    return Math.max.apply(Math, HomeComponent.tableData.map(element => element.id)) + 1;
   }
 }
