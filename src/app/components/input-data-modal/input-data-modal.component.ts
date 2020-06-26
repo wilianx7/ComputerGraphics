@@ -75,16 +75,36 @@ export class InputDataModalComponent {
    * Calcula as coordenadas cartesianas de acordo com as coordenadas polares
    */
   public calculateCartesianCoordinates() {
-    // Seta os valores default
-    this.angleInput = this.angleInput || 0;
-    this.radiusInput = this.radiusInput || 0;
+  
+    //Tratamento de angulos problematicos
+    switch(Number(this.angleInput)){
+      //Caso possuir angulo 0, o 'x' varia de acordo com o raio
+      case 0:
+      case 360:
+        this.inputPositionX = this.radiusInput;
+        this.inputPositionY = 0;
+      break;
+      case 90:
+        //Caso possuir angulo 90, o 'y' varia de acordo com o raio
+        this.inputPositionY = this.radiusInput;
+        this.inputPositionX = 0;
+      break;
+      case 180:
+        this.inputPositionY = 0;
+        this.inputPositionX = this.radiusInput * -1;
+      break;
+      default:
+        // Seta os valores default
+        this.angleInput = this.angleInput || 0;
+        this.radiusInput = this.radiusInput || 0;
 
-    // Calcula os dados coordenadas cartesianas
-    // Calculo equivalentes:
-    // raio * cos(angulo)
-    this.inputPositionX = this.radiusInput * Math.cos(this.angleInput / (180 / Math.PI));
-    // raio * sen(angulo)
-    this.inputPositionY = this.radiusInput * Math.sin(this.angleInput / (180 / Math.PI));
+        // Calcula os dados coordenadas cartesianas
+        // Calculo equivalentes:
+        // raio * cos(angulo)
+        this.inputPositionX = Number((this.radiusInput * Math.cos(this.angleInput / (180 / Math.PI))).toFixed(2)) || 0;
+        // raio * sen(angulo)
+        this.inputPositionY = Number((this.radiusInput * Math.sin(this.angleInput / (180 / Math.PI))).toFixed(2)) || 0;
+    }
   }
 
   /**

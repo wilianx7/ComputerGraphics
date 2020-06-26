@@ -31,8 +31,8 @@
                                 <tr [evenStripped]='true' ngt-tr *ngFor='let airplane of getTableData()'>
                                     <td [reference]='airplane' ngt-td-check></td>
                                     <td ngt-td>{{ airplane.id }}</td>
-                                    <td ngt-td>{{ airplane.x }}</td>
-                                    <td ngt-td>{{ airplane.y }}</td>
+                                    <td ngt-td>{{ airplane.x || 0 }}</td>
+                                    <td ngt-td>{{ airplane.y || 0}}</td>
                                     <td ngt-td>{{ airplane.radius }}</td>
                                     <td ngt-td>{{ airplane.angle }}</td>
                                     <td ngt-td>{{ airplane.speed }}</td>
