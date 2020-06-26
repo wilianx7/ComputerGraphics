@@ -51,7 +51,7 @@ export class RadarComponent implements AfterViewInit {
 
     if (this.containerDimensions.width >= 1400) {
       if (airplane.y > 0) {
-        yTranlation += this.squareWidth * 0.2;
+        yTranlation += (this.squareWidth * (airplane.y < 4 ? 0.3 : 0.2));
       } else if (airplane.y < 0) {
         yTranlation += this.squareWidth * 0.5;
       } else {
