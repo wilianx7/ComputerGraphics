@@ -26,14 +26,15 @@ export class RadarComponent implements AfterViewInit {
 
     setTimeout(() => {
       this.loadTableData();
-    }, 250);
+    }, 100);
 
     window.addEventListener('resize', () => {
-      this.loadSquares();
+      this.loadSquares().then(() => {
+        setTimeout(() => {
+          this.loadTableData();
+        }, 100);
+      });
 
-      setTimeout(() => {
-        this.loadTableData();
-      }, 250);
     });
   }
 
@@ -53,15 +54,15 @@ export class RadarComponent implements AfterViewInit {
       if (airplane.y > 0) {
         yTranlation += (this.squareWidth * (airplane.y < 4 ? 0.3 : 0.2));
       } else if (airplane.y < 0) {
-        yTranlation += this.squareWidth * 0.5;
+        yTranlation -= this.squareWidth * (airplane.y > -4 ? 0.6 : 0.5);
       } else {
         yTranlation -= this.squareWidth * 0.15;
       }
     } else {
       if (airplane.y > 0) {
-        yTranlation -= this.squareWidth * 0.2;
+        yTranlation += this.squareWidth * 0.4;
       } else if (airplane.y < 0) {
-        yTranlation -= this.squareWidth * 0.05;
+        yTranlation -= this.squareWidth * 0.6;
       } else {
         yTranlation -= this.squareWidth * 0.15;
       }
@@ -71,38 +72,44 @@ export class RadarComponent implements AfterViewInit {
   }
 
   public loadTableData() {
-    this.loadSquares();
-    this.tableData = JSON.parse(localStorage.getItem('tableData')) ? JSON.parse(localStorage.getItem('tableData')) : [];
-    this.changeDetector.detectChanges();
+    this.loadSquares().then(() => {
+      this.tableData = JSON.parse(localStorage.getItem('tableData')) ? JSON.parse(localStorage.getItem('tableData')) : [];
+      this.changeDetector.detectChanges();
 
-    this.tableData.forEach((airplane) => {
-      this.plotAirplane(airplane);
+      setTimeout(() => {
+        this.tableData.forEach((airplane) => {
+          this.plotAirplane(airplane);
+        });
+      }, 100);
+
+      this.changeDetector.detectChanges();
     });
-
-    this.changeDetector.detectChanges();
   }
 
   private loadSquares() {
-    setTimeout(() => {
-      this.containerDimensions = this.radarContainer.nativeElement.getBoundingClientRect();
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        this.containerDimensions = this.radarContainer.nativeElement.getBoundingClientRect();
 
-      this.squareWidth = this.containerDimensions.width / (this.containerDimensions.width >= 1400 ? 42 : 30);
-      const squareCount = Math.round(this.containerDimensions.height / this.squareWidth) * (this.containerDimensions.width >= 1400 ? 42 : 30);
+        this.squareWidth = this.containerDimensions.width / (this.containerDimensions.width >= 1400 ? 42 : 32);
+        const squareCount = Math.round(this.containerDimensions.height / this.squareWidth) * (this.containerDimensions.width >= 1400 ? 42 : 32);
 
-      this.radarSquares = new Array();
+        this.radarSquares = new Array();
 
-      for (let i = 0; i < squareCount; i++) {
-        let square = new Square();
-        square.height = this.squareWidth + 'px';
-        square.width = this.squareWidth + 'px';
-        this.radarSquares.push(square);
-      }
+        for (let i = 0; i < squareCount; i++) {
+          let square = new Square();
+          square.height = this.squareWidth + 'px';
+          square.width = this.squareWidth + 'px';
+          this.radarSquares.push(square);
+        }
 
-      this.middlePointXPosition = (this.containerDimensions.width / 2) - (this.middlePointElement.nativeElement.offsetWidth / 2);
-      this.middlePointYPosition = (this.containerDimensions.height / 2) - (this.middlePointElement.nativeElement.offsetHeight / 2);
+        this.middlePointXPosition = (this.containerDimensions.width / 2) - (this.middlePointElement.nativeElement.offsetWidth / 2);
+        this.middlePointYPosition = (this.containerDimensions.height / 2) - (this.middlePointElement.nativeElement.offsetHeight / 2);
 
-      this.changeDetector.detectChanges();
-    }, 250);
+        this.changeDetector.detectChanges();
+        resolve();
+      }, 100);
+    });
   }
 
   private getAirplaneDirection(airplane: Airplane) {
