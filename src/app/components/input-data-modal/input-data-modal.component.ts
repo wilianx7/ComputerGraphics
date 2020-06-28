@@ -1,5 +1,5 @@
 import { Component, SkipSelf, ViewChild } from '@angular/core';
-import { NgtModalComponent } from 'ng-tailwind';
+import { NgtInputComponent, NgtModalComponent } from 'ng-tailwind';
 import { HomeComponent } from 'src/app/pages/home/home.component';
 
 import { SidenavMenuComponent } from '../sidenav-menu/sidenav-menu.component';
@@ -11,6 +11,7 @@ import { SidenavMenuComponent } from '../sidenav-menu/sidenav-menu.component';
 })
 export class InputDataModalComponent {
   @ViewChild(NgtModalComponent) ngtModal: NgtModalComponent;
+  @ViewChild('inputPositionXComponent') inputPositionXComponent: NgtInputComponent;
 
   /** Input Data */
   public inputPositionX: number;
@@ -28,6 +29,7 @@ export class InputDataModalComponent {
 
   public openModal() {
     this.clearInputs();
+    this.inputPositionXComponent.setFocus();
     this.ngtModal.open();
   }
 
@@ -35,11 +37,21 @@ export class InputDataModalComponent {
     this.ngtModal.close();
   }
 
+  public isValidForm() {
+    return (this.inputPositionX && this.inputPositionY) || (this.angleInput && this.radiusInput);
+  }
+
   /**
    * Responsavel por salvar os dados digitados pelo usuario
    */
   public saveInputData() {
     this.closeModal();
+
+    if (this.inputPositionX) {
+      this.calculatePolarCoordinates();
+    } else {
+      this.calculateCartesianCoordinates();
+    }
 
     // Adiciona as variaveis para salvar no array vinculado a Grid
     HomeComponent.tableData.push({
@@ -61,14 +73,10 @@ export class InputDataModalComponent {
    * @param x Coordenada cartesiana X
    * @param y Coordenada cartesiana Y
    */
-  public calculatePolarCoordinates(x?: number, y?: number) {
-    // Seta os valores default para calculo
-    x = x || this.inputPositionX;
-    y = y || this.inputPositionY;
-
+  public calculatePolarCoordinates() {
     // Calcula os dados da polar
-    this.radiusInput = this.homeComponent.calculatePolarCoordinatesRadius(x, y);
-    this.angleInput = this.homeComponent.calculatePolarCoordinatesAngle(x, y);
+    this.radiusInput = this.homeComponent.calculatePolarCoordinatesRadius(this.inputPositionX, this.inputPositionY);
+    this.angleInput = this.homeComponent.calculatePolarCoordinatesAngle(this.inputPositionX, this.inputPositionY);
   }
 
   /**

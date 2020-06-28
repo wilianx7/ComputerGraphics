@@ -8,29 +8,36 @@
             <div class="flex flex-col w-full">
                 <div class="flex w-full">
                     <ngt-input class="block w-6/12 mr-4" name='inputPositionX' [(ngModel)]="inputPositionX" label='X'
-                        [jit]='true' (keyup)='calculatePolarCoordinates()'></ngt-input>
+                        [jit]='true' mask='decimal' [isDisabled]='radiusInput || angleInput' #inputPositionXComponent>
+                    </ngt-input>
+
                     <ngt-input class="block w-6/12" name='inputPositionY' [(ngModel)]="inputPositionY" label='Y'
-                        [jit]='true' (keyup)='calculatePolarCoordinates()'></ngt-input>
+                        [jit]='true' mask='decimal' [isDisabled]='radiusInput || angleInput'></ngt-input>
                 </div>
 
                 <div class="flex w-full mt-2">
                     <ngt-input class="block w-6/12 mr-4" name='radiusInput' [(ngModel)]="radiusInput" label='Raio'
-                        [jit]='true' (keyup)='calculateCartesianCoordinates()'></ngt-input>
+                        [jit]='true' mask='decimal' [isDisabled]='inputPositionX || inputPositionY'></ngt-input>
+
                     <ngt-input class="block w-6/12" name='angleInput' [(ngModel)]="angleInput" label='Ângulo'
-                        [jit]='true' (keyup)='calculateCartesianCoordinates()'></ngt-input>
+                        [jit]='true' mask='decimal' [isDisabled]='inputPositionX || inputPositionY'></ngt-input>
                 </div>
 
                 <div class="flex w-full mt-2">
-                    <ngt-input class="block w-6/12 mr-4" name='speedInput' [(ngModel)]="speedInput" label='Velocidade'>
+                    <ngt-input class="block w-6/12 mr-4" name='speedInput' mask='decimal' [(ngModel)]="speedInput"
+                        label='Velocidade'>
                     </ngt-input>
-                    <ngt-input class="block w-6/12" name='directionInput' [(ngModel)]="directionInput" label='Direção'>
+
+                    <ngt-input class="block w-6/12" name='directionInput' mask='decimal' [(ngModel)]="directionInput"
+                        label='Direção'>
                     </ngt-input>
                 </div>
             </div>
         </ngt-modal-body>
 
         <ngt-modal-footer class="block mt-4">
-            <ngt-button class="block w-6/12 mr-6 hover:opacity-75" type='success' (click)='saveInputData()'>
+            <ngt-button class="block w-6/12 mr-6 hover:opacity-75" [isDisabled]='!isValidForm()' type='success'
+                (click)='saveInputData()'>
                 <span class="w-full text-center">Salvar</span>
             </ngt-button>
 
