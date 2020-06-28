@@ -6,28 +6,28 @@
 
         <ngt-modal-body style="max-height: 400px;">
             <div class="flex flex-col w-full">
-                <ngt-input class="block w-full" name='inputPositionX' [jit]='true' [(ngModel)]="inputPositionX"
-                    label='Valor de X'>
+                <ngt-input class="block w-full" name='inputPositionX' mask='decimal' [jit]='true'
+                    [(ngModel)]="inputPositionX" label='Valor de X' #inputPositionXComponent>
                 </ngt-input>
 
-                <ngt-input class="mt-3 block w-full" name='inputPositionY' [jit]='true' [(ngModel)]="inputPositionY"
-                    label='Valor de Y'>
+                <ngt-input class="mt-3 block w-full" name='inputPositionY' mask='decimal' [jit]='true'
+                    [(ngModel)]="inputPositionY" label='Valor de Y'>
                 </ngt-input>
 
-                <ngt-input class="mt-3 block w-full" name='rotateAngle' [jit]='true' [(ngModel)]="rotateAngle"
-                    label='Ângulo'>
+                <ngt-input class="mt-3 block w-full" name='rotateAngle' mask='decimal' [jit]='true'
+                    [(ngModel)]="rotateAngle" label='Ângulo'>
                 </ngt-input>
             </div>
         </ngt-modal-body>
 
         <ngt-modal-footer class="block mt-4">
-            <ngt-button class="block w-4/12 mr-4 hover:opacity-75" type='success' [isDisabled]="rotateAngle"
-                (click)='translande()'>
+            <ngt-button class="block w-4/12 mr-4 hover:opacity-75" type='success'
+                [isDisabled]="!inputPositionX || !inputPositionY || rotateAngle" (click)='translande()'>
                 <span class="w-full text-center">Translandar</span>
             </ngt-button>
 
-            <ngt-button class="block w-4/12 mr-4 hover:opacity-75" type='info' [isDisabled]="rotateAngle"
-                (click)='stagger()'>
+            <ngt-button class="block w-4/12 mr-4 hover:opacity-75" type='info'
+                [isDisabled]="!inputPositionX || !inputPositionY || rotateAngle" (click)='stagger()'>
                 <span class="w-full text-center">Escalonar</span>
             </ngt-button>
 

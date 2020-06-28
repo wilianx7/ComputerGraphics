@@ -6,21 +6,29 @@
 
         <ngt-modal-body style="max-height: 400px;">
             <div class="flex flex-col w-full">
-                <ngt-input class="block w-full" name='minDistance' [(ngModel)]="minDistance" label='Distância mínima'>
+                <ngt-input class="block w-full" mask='decimal' name='minDistance' [(ngModel)]="minDistance" [jit]='true'
+                    label='Distância mínima' #minDistanceInput>
+                </ngt-input>
+
+                <ngt-input class="block w-full mt-3" mask='decimal' name='minTime' [(ngModel)]="minTime" [jit]='true'
+                    label='Tempo mínimo'>
                 </ngt-input>
             </div>
         </ngt-modal-body>
 
         <ngt-modal-footer class="block mt-4">
-            <ngt-button class="block w-4/12 mr-4 hover:opacity-75" type='info' (click)='trackPlanesNearAirport()'>
+            <ngt-button class="block w-4/12 mr-4 hover:opacity-75" type='info' (click)='trackPlanesNearAirport()'
+                [isDisabled]='!minDistance || minTime'>
                 <span class="w-full text-center">Aviões Próximos ao Aeroporto</span>
             </ngt-button>
 
-            <ngt-button class="block w-4/12 mr-4 hover:opacity-75" type='warning' (click)='trackNearbyPlanes()'>
+            <ngt-button class="block w-4/12 mr-4 hover:opacity-75" type='warning' (click)='trackNearbyPlanes()'
+                [isDisabled]='!minDistance || minTime'>
                 <span class="w-full text-center">Aviões Próximos</span>
             </ngt-button>
 
-            <ngt-button class="block w-4/12 hover:opacity-75" type='danger' (click)='trackCollision()'>
+            <ngt-button class="block w-4/12 hover:opacity-75" type='danger' (click)='trackCollision()'
+                [isDisabled]='!minTime || minDistance'>
                 <span class="w-full text-center">Rota de Colisão</span>
             </ngt-button>
         </ngt-modal-footer>

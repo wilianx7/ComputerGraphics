@@ -1,5 +1,5 @@
 import { Component, SkipSelf, ViewChild } from '@angular/core';
-import { NgtModalComponent } from 'ng-tailwind';
+import { NgtInputComponent, NgtModalComponent } from 'ng-tailwind';
 import { HomeComponent } from 'src/app/pages/home/home.component';
 
 import { SidenavMenuComponent } from '../sidenav-menu/sidenav-menu.component';
@@ -11,6 +11,7 @@ import { SidenavMenuComponent } from '../sidenav-menu/sidenav-menu.component';
 })
 export class TransformationFunctionsModalComponent {
   @ViewChild(NgtModalComponent) ngtModal: NgtModalComponent;
+  @ViewChild('inputPositionXComponent') inputPositionXComponent: NgtInputComponent;
 
   /** Transformation Data */
   public inputPositionX: number;
@@ -25,6 +26,7 @@ export class TransformationFunctionsModalComponent {
 
   public openModal() {
     this.clearInputs();
+    this.inputPositionXComponent.setFocus();
     this.ngtModal.open();
   }
 

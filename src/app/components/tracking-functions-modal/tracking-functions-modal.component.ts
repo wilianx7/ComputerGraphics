@@ -1,5 +1,5 @@
 import { Component, SkipSelf, ViewChild } from '@angular/core';
-import { NgtModalComponent } from 'ng-tailwind';
+import { NgtInputComponent, NgtModalComponent } from 'ng-tailwind';
 import { HomeComponent } from 'src/app/pages/home/home.component';
 
 import { SidenavMenuComponent } from '../sidenav-menu/sidenav-menu.component';
@@ -11,9 +11,11 @@ import { SidenavMenuComponent } from '../sidenav-menu/sidenav-menu.component';
 })
 export class TrackingFunctionsModalComponent {
   @ViewChild(NgtModalComponent) ngtModal: NgtModalComponent;
+  @ViewChild('minDistanceInput') minDistanceInput: NgtInputComponent;
 
   /** Track Data */
   public minDistance: number;
+  public minTime: number;
 
   constructor(@SkipSelf() private homeComponent: HomeComponent) {
     SidenavMenuComponent.onOpenTrackingFunctionsModal.subscribe(() => {
@@ -23,6 +25,7 @@ export class TrackingFunctionsModalComponent {
 
   public openModal() {
     this.clearInputs();
+    this.minDistanceInput.setFocus();
     this.ngtModal.open();
   }
 
