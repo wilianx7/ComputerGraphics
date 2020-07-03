@@ -14,6 +14,7 @@ export class HomeComponent implements AfterViewInit {
   @ViewChild(RadarComponent) radarComponent: RadarComponent;
 
   public static tableData: Array<Airplane> = [];
+  public static report: Array<string> = [];
 
   constructor(private changeDetector: ChangeDetectorRef) { }
 
@@ -24,6 +25,10 @@ export class HomeComponent implements AfterViewInit {
 
   public getTableData() {
     return HomeComponent.tableData;
+  }
+
+  public getReport() {
+    return HomeComponent.report;
   }
 
   /**
@@ -59,4 +64,13 @@ export class HomeComponent implements AfterViewInit {
 
     this.radarComponent.loadTableData();
   }
+
+  public updateReport(error :string){
+    HomeComponent.report.push(error);
+  }
+
+  public clearReport(){
+    HomeComponent.report = undefined;
+  }
+
 }
