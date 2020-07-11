@@ -9,6 +9,7 @@ import { TrackingFunctionsModalModule } from 'src/app/components/tracking-functi
 import {
   TransformationFunctionsModalModule,
 } from 'src/app/components/transformation-functions-modal/transformation-functions-modal.module';
+import { PipeModule } from 'src/app/pipes/pipe.module';
 
 import { HomeComponent } from './home.component';
 
@@ -32,7 +33,8 @@ const routes: Routes = [
     TrackingFunctionsModalModule,
     NgtStylizableModule,
     NgtDatatableModule,
-    NgtActionModule
+    NgtActionModule,
+    PipeModule,
   ]
 })
 export class HomeModule { }

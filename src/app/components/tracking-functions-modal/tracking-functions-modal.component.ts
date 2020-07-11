@@ -1,8 +1,12 @@
 import { Component, SkipSelf, ViewChild } from '@angular/core';
 import { NgtInputComponent, NgtModalComponent } from 'ng-tailwind';
 import { HomeComponent } from 'src/app/pages/home/home.component';
+import { Report } from 'src/app/resources/report';
+import { ReportTypeEnum } from 'src/app/resources/report-type.enum';
 
 import { SidenavMenuComponent } from '../sidenav-menu/sidenav-menu.component';
+
+let moment = require('moment');
 
 @Component({
     selector: 'tracking-functions-modal',
@@ -16,7 +20,6 @@ export class TrackingFunctionsModalComponent {
     /** Track Data */
     public minDistance: number;
     public minTime: number;
-    private errors: string;
 
     constructor(@SkipSelf() private homeComponent: HomeComponent) {
         SidenavMenuComponent.onOpenTrackingFunctionsModal.subscribe(() => {
@@ -38,13 +41,20 @@ export class TrackingFunctionsModalComponent {
      * Verifica se os aviões próximo ao aeroporto
      */
     public trackPlanesNearAirport() {
-
-        this.homeComponent.clearReport;
-
         for (const data of HomeComponent.tableData) {
-            if ((Math.sqrt(Math.pow(data.x, 2) + Math.pow(data.y, 2))) < this.minDistance) {
-                this.errors = 'Avião ' + data.id + ' está próximo ao aeroporto';
-                this.homeComponent.updateReport(this.errors);
+            const airplaneRadius = (Math.sqrt(Math.pow(data.x, 2) + Math.pow(data.y, 2)));
+
+            if (airplaneRadius < this.minDistance) {
+                let report = new Report();
+
+                report.id = this.getNextReportId();
+                report.distance = this.formatNumber(airplaneRadius);
+                report.airplanes = `[${data.id}]`;
+                report.position = `(${this.formatNumber(data.x)}, ${this.formatNumber(data.y)})`;
+                report.time = moment().format('DD/MM/YYYY HH:mm:ss');
+                report.type = ReportTypeEnum.AIRPORT;
+
+                this.homeComponent.addReport(report);
             }
         }
 
@@ -62,14 +72,22 @@ export class TrackingFunctionsModalComponent {
 
         for (const data of dataFor) {
             for (const data2 of dataFor2) {
-                const distancia = (Math.sqrt(Math.pow(data.x - data2.x, 2) +
+                const distance = (Math.sqrt(Math.pow(data.x - data2.x, 2) +
                     Math.pow(data.y - data2.y, 2)));
 
                 nearbyPlane.push(String(data.id) + String(data2.id));
-                if ((distancia < this.minDistance) && nearbyPlane.indexOf(String(data2.id) + String(data.id)) == -1) {
+                if ((distance < this.minDistance) && nearbyPlane.indexOf(String(data2.id) + String(data.id)) == -1) {
                     if (data.id != data2.id) {
-                        this.homeComponent.updateReport('O avião ' + data.id + ' está próximo do avião '
-                            + data2.id + ' - Distância de ' + distancia.toFixed(2) + 'KM');
+                        let report = new Report();
+
+                        report.id = this.getNextReportId();
+                        report.distance = this.formatNumber(distance);
+                        report.airplanes = `[${data.id}, ${data2.id}]`;
+                        report.position = `[(${this.formatNumber(data.x)}, ${this.formatNumber(data.y)}), (${this.formatNumber(data2.x)}, ${this.formatNumber(data2.y)})]`;
+                        report.time = moment().format('DD/MM/YYYY HH:mm:ss');
+                        report.type = ReportTypeEnum.NEARBY;
+
+                        this.homeComponent.addReport(report);
                     }
                 }
             }
@@ -117,11 +135,18 @@ export class TrackingFunctionsModalComponent {
                         (Number((Number(px1) < Number(px2))) > -0.01)
                     ) {
                         if (px1 < this.minTime) {
-                            const message = 'Os aviões ' + data.id + ' e ' + data2.id
-                                + ' irão se colidir no tempo ' + px1 + ' na posição ( ' + (Number(data.x) + Number(Vx1) * Number(px1))
-                                + ',' + (Number(data.y) + Number(Vy1) * Number(px1)) + ')';
+                            const xColision = (Number(data.x) + Number(Vx1) * Number(px1));
+                            const yColision = (Number(data.y) + Number(Vy1) * Number(px1));
 
-                            this.homeComponent.updateReport(message);
+                            let report = new Report();
+
+                            report.id = this.getNextReportId();
+                            report.airplanes = `[${data.id}, ${data2.id}]`;
+                            report.position = `(${this.formatNumber(xColision)}, ${this.formatNumber(yColision)})`;
+                            report.time = px1.toString();
+                            report.type = ReportTypeEnum.COLISION;
+
+                            this.homeComponent.addReport(report);
                         }
                     }
 
@@ -138,5 +163,17 @@ export class TrackingFunctionsModalComponent {
     private clearInputs() {
         this.minDistance = undefined;
         this.minTime = undefined;
+    }
+
+    private getNextReportId() {
+        if (!HomeComponent.reportData || HomeComponent.reportData && !HomeComponent.reportData.length) {
+            return 1;
+        }
+
+        return Math.max.apply(Math, HomeComponent.reportData.map(element => element.id)) + 1;
+    }
+
+    private formatNumber(number: number) {
+        return new Intl.NumberFormat('en-us', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(number);
     }
 }
