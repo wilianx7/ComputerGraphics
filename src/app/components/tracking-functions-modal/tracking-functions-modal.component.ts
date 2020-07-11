@@ -41,9 +41,9 @@ export class TrackingFunctionsModalComponent {
     
     this.homeComponent.clearReport;
 
-    for (const data of this.homeComponent.ngtDatatable.selectedElements) {
-      if((Math.sqrt(Math.pow(data.reference.x,2) + Math.pow(data.reference.y,2))) < this.minDistance ){
-        this.errors =  'Avião ' + data.reference.id + ' está próximo ao aeroporto'; 
+    for (const data of HomeComponent.tableData) {
+      if((Math.sqrt(Math.pow(data.x,2) + Math.pow(data.y,2))) < this.minDistance ){
+        this.errors =  'Avião ' + data.id + ' está próximo ao aeroporto'; 
         this.homeComponent.updateReport(this.errors);
       }
     }
@@ -57,19 +57,19 @@ export class TrackingFunctionsModalComponent {
   public trackNearbyPlanes() { 
     let nearbyPlane = [];
 
-    let dataFor = this.homeComponent.ngtDatatable.selectedElements;
-    let dataFor2 = this.homeComponent.ngtDatatable.selectedElements;
+    let dataFor = HomeComponent.tableData;
+    let dataFor2 = HomeComponent.tableData;
     
     for (const data of dataFor) {
       for(const data2 of dataFor2){
-        const distancia = (Math.sqrt(Math.pow(data.reference.x - data2.reference.x,2) + 
-        Math.pow(data.reference.y - data2.reference.y,2)));
+        const distancia = (Math.sqrt(Math.pow(data.x - data2.x,2) + 
+        Math.pow(data.y - data2.y,2)));
 
-        nearbyPlane.push(String(data.reference.id) + String(data2.reference.id));
-        if((distancia < this.minDistance) && nearbyPlane.indexOf(String(data2.reference.id) + String(data.reference.id)) == -1){ 
-          if(data.reference.id != data2.reference.id ){
-            this.homeComponent.updateReport('O avião ' + data.reference.id + ' está próximo do avião ' 
-              + data2.reference.id + ' - Distância de ' + distancia.toFixed(2) + 'KM');
+        nearbyPlane.push(String(data.id) + String(data2.id));
+        if((distancia < this.minDistance) && nearbyPlane.indexOf(String(data2.id) + String(data.id)) == -1){ 
+          if(data.id != data2.id ){
+            this.homeComponent.updateReport('O avião ' + data.id + ' está próximo do avião ' 
+              + data2.id + ' - Distância de ' + distancia.toFixed(2) + 'KM');
           }
         }    
       }
@@ -77,7 +77,7 @@ export class TrackingFunctionsModalComponent {
 
     this.closeModal();
   }
-
+  
   /**
    * Verifica os aviões que vão se colidir
    */
@@ -86,37 +86,41 @@ export class TrackingFunctionsModalComponent {
     let trackCollision = [];
 
     //Percorre todos os aviões
-    for (const data of this.homeComponent.ngtDatatable.selectedElements) {
+    for (const data of HomeComponent.tableData) {
       //Percorre o restantes dos aviões
       for(const data2 of HomeComponent.tableData){
         //Se for o mesmo avião, não realiza o calculo
-        if(data.reference.id == data2.id){
+        if(data.id == data2.id){
           continue;
         }
 
         //Adiciona no array para controle de não repetição de calculo
-        trackCollision.push(String(data.reference.id) + String(data2.id));
+        trackCollision.push(String(data.id) + String(data2.id));
 
         //Se não foi calculado a distancia de um avião para outro
-        if(trackCollision.indexOf(String(data2.id) + String(data.reference.id)) == -1){
+        if(trackCollision.indexOf(String(data2.id) + String(data.id)) == -1){
           //Calcula os componentes de velocidade do Avião 1
-          const Vx1 = Number(data.reference.speed) * Number((Math.cos(data.reference.direction / (180 / Math.PI))).toFixed(2));
-          const Vy1 = Number(data.reference.speed) * Number((Math.sin(data.reference.direction / (180 / Math.PI))).toFixed(2));
+          const Vx1 = Number(data.speed) * Number((Math.cos(data.direction / (180 / Math.PI))).toFixed(2));
+          const Vy1 = Number(data.speed) * Number((Math.sin(data.direction / (180 / Math.PI))).toFixed(2));
         
           //Calcula os componentes de velocidade do Avião 2
           const Vx2 = Number(data2.speed) * Number((Math.cos(data2.direction / (180 / Math.PI))).toFixed(2));
           const Vy2 = Number(data2.speed) * Number((Math.sin(data2.direction / (180 / Math.PI))).toFixed(2));
       
           //Calcular posição em função do tempo
-          const px1 = (data2.x + Number(Vx2))/(data.reference.x + Number(Vx1));
-          const px2 = (data2.y + Number(Vy2))/(data.reference.y + Number(Vy2));
-          console.log((data2.y + Number(Vy2)) + ' - ' + (data2.x + Number(Vx2)));
+          const px1 = (Number(data2.x) + Number(Vx2))/(Number(data.x) + Number(Vx1));
+          const px2 = (Number(data2.y) + Number(Vy2))/(Number(data.y) + Number(Vy1));
+          
           //Verifica se os tempos são iguais
-          if(px1 == px2){
+          if(
+              (Number((Number(px1) < Number(px2))) < 0.01) &&
+              (Number((Number(px1) < Number(px2))) > -0.01)
+            ){
             if(px1 < this.minTime){
-              const message = 'Os aviões ' + data.reference.id + ' e ' + data2.id 
-              + ' irão se colidir no tempo ' + px1 + ' na posição ( ' + (Number(data.reference.x) + Number(Vx1) * Number(px1)) 
-              + ',' + (Number(data.reference.y) + Number(Vy1) * Number(px1)) + ')' ;
+              const message = 'Os aviões ' + data.id + ' e ' + data2.id 
+              + ' irão se colidir no tempo ' + px1 + ' na posição ( ' + (Number(data.x) + Number(Vx1) * Number(px1)) 
+              + ',' + (Number(data.y) + Number(Vy1) * Number(px1)) + ')' ;
+
               this.homeComponent.updateReport(message);
             }
           }
