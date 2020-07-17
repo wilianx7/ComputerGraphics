@@ -124,16 +124,48 @@ export class TrackingFunctionsModalComponent {
                     //Calcula os componentes de velocidade do Avião 2
                     const Vx2 = Number(data2.speed) * Number((Math.cos(data2.direction / (180 / Math.PI))).toFixed(2));
                     const Vy2 = Number(data2.speed) * Number((Math.sin(data2.direction / (180 / Math.PI))).toFixed(2));
+                        
+                    //Variaveis para controle de igualdade nas funções de tempo
+                    let XequalInTime = true;
+                    let YequalInTime = true;
 
-                    //Calcular posição em função do tempo
-                    const px1 = (Number(data2.x) + Number(Vx2)) / (Number(data.x) + Number(Vx1));
-                    const px2 = (Number(data2.y) + Number(Vy2)) / (Number(data.y) + Number(Vy1));
+                    //Variaveis para controle de valores em função do tempo
+                    let px1 = -999;
+                    let px2 = 999;
 
+                    //Validação especifica para valores que são 0 e 0 em X ou Y nos avioes 
+                    if((Number(Vx2) == 0) && (Number(Vx1) == 0)){
+                        //Se as funções são iguais
+                        if(Number(data2.x) == Number(data.x)){
+                            px1 = 1;
+                            XequalInTime = true;        
+                        }else{
+                            XequalInTime = false;
+                        }
+                    } 
+                    
+                    //Validação especifica para valores que são 0 e 0 em X ou Y nos avioes
+                    if((Number(Vy2) == 0) && (Number(Vy1) == 0)){
+                        //Se as funções são iguais
+                        if(Number(data2.y) == Number(data.y)){
+                            px2 = 1;
+                            YequalInTime = true;        
+                        }else{
+                            YequalInTime = false;
+                        }
+                    }
+                    
+                    //Realiza o calculo da função em relação do tempo
+                    px1 = px1 != 1 ? (Number(data2.x) + Number(Vx2)) / (Number(data.x) + Number(Vx1)) : px1;
+                    px2 = px2 != 1 ? (Number(data2.y) + Number(Vy2)) / (Number(data.y) + Number(Vy1)) : px2;
+                    
                     //Verifica se os tempos são iguais
                     if (
-                        (Number((Number(px1) < Number(px2))) < 0.01) &&
-                        (Number((Number(px1) < Number(px2))) > -0.01)
+                        ((Number((Number(px1) - Number(px2))) < 0.01) &&
+                        (Number((Number(px1) - Number(px2))) > -0.01)) &&
+                        (XequalInTime && YequalInTime)
                     ) {
+                        //Verifica se o tempo esta de acordo com o minimo
                         if (px1 < this.minTime) {
                             const xColision = (Number(data.x) + Number(Vx1) * Number(px1));
                             const yColision = (Number(data.y) + Number(Vy1) * Number(px1));
@@ -155,7 +187,6 @@ export class TrackingFunctionsModalComponent {
             }
         }
     }
-
 
     /**
      * Limpa as variaveis de entrada
