@@ -40,7 +40,7 @@ export class HomeComponent implements AfterViewInit {
        */
     public calculatePolarCoordinatesRadius(x: number, y: number): number {
         // Calculo equivalente a linha abaixo: r = √x² + y²
-        return Number((Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2))).toFixed(2)) || 0;
+        return Number((Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2)))) || 0;
     }
 
     /**
@@ -50,7 +50,7 @@ export class HomeComponent implements AfterViewInit {
      */
     public calculatePolarCoordinatesAngle(x: number, y: number): number {
         // Calculo equivalente a linha abaixo: tag(teta)
-        let theta = Number((Math.atan2(y, x) * 180 / Math.PI).toFixed(2)) || 0;
+        let theta = Number((Math.atan2(y, x) * 180 / Math.PI)) || 0;
         if (theta < 0) theta = 360 + theta; // range [0, 360)
         return theta;
     }

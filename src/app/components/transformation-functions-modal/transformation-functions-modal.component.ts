@@ -39,8 +39,8 @@ export class TransformationFunctionsModalComponent {
   */
   public translande() {
     for (const data of this.homeComponent.ngtDatatable.selectedElements) {
-      data.reference.x = Number((Number(data.reference.x) + Number(this.inputPositionX)).toFixed(2));
-      data.reference.y = Number((Number(data.reference.y) + Number(this.inputPositionY)).toFixed(2));
+      data.reference.x = Number((Number(data.reference.x) + Number(this.inputPositionX)));
+      data.reference.y = Number((Number(data.reference.y) + Number(this.inputPositionY)));
 
       // Calcular polar
       data.reference.radius = this.homeComponent.calculatePolarCoordinatesRadius(data.reference.x, data.reference.y) || 0;
@@ -56,8 +56,8 @@ export class TransformationFunctionsModalComponent {
    */
   public stagger() {
     for (const data of this.homeComponent.ngtDatatable.selectedElements) {
-      data.reference.x = Number((Number(data.reference.x) * Number(this.inputPositionX / 100)).toFixed(2));
-      data.reference.y = Number((Number(data.reference.y) * Number(this.inputPositionY / 100)).toFixed(2));
+      data.reference.x = Number((Number(data.reference.x) * Number(this.inputPositionX / 100)));
+      data.reference.y = Number((Number(data.reference.y) * Number(this.inputPositionY / 100)));
 
       // Calcular polar
       data.reference.radius = this.homeComponent.calculatePolarCoordinatesRadius(data.reference.x, data.reference.y) || 0;
@@ -73,8 +73,8 @@ export class TransformationFunctionsModalComponent {
    */
   public rotate() {
     // Calcula o cos(B) e sen(B) de acordo com o angulo preenchido
-    const cos = Number((Math.cos(this.rotateAngle / (180 / Math.PI))).toFixed(2));
-    const sen = Number((Math.sin(this.rotateAngle / (180 / Math.PI))).toFixed(2));
+    const cos = Number((Math.cos(this.rotateAngle / (180 / Math.PI))));
+    const sen = Number((Math.sin(this.rotateAngle / (180 / Math.PI))));
 
     // Percorre todos os dados da grid
     for (const data of this.homeComponent.ngtDatatable.selectedElements) {
@@ -89,8 +89,8 @@ export class TransformationFunctionsModalComponent {
       data.reference.y = (x * sen) + (y * cos);
 
       // Volta para os pontos com o calculo de rotação feito
-      data.reference.x = Number((data.reference.x + Number(this.inputPositionX)).toFixed(2));
-      data.reference.y = Number((data.reference.y + Number(this.inputPositionY)).toFixed(2));
+      data.reference.x = Number((data.reference.x + Number(this.inputPositionX)));
+      data.reference.y = Number((data.reference.y + Number(this.inputPositionY)));
 
       // Calcular polar
       data.reference.radius = this.homeComponent.calculatePolarCoordinatesRadius(data.reference.x, data.reference.y) || 0;
