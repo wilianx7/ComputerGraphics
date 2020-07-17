@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
+import { NumberFormatPipe } from './number-format.pipe';
 import { ReportTypePipe } from './report-type.pipe';
 
 @NgModule({
@@ -9,9 +10,11 @@ import { ReportTypePipe } from './report-type.pipe';
     ],
     declarations: [
         ReportTypePipe,
+        NumberFormatPipe,
     ],
     exports: [
         ReportTypePipe,
+        NumberFormatPipe,
     ]
 })
 export class PipeModule { }
