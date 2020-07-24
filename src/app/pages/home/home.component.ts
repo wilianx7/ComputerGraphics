@@ -60,6 +60,11 @@ export class HomeComponent implements AfterViewInit {
         this.updateTableData();
     }
 
+    public clearReport() {
+        HomeComponent.reportData = [];
+        this.updateReportData();
+    }
+
     public removeReport(report: Report) {
         HomeComponent.reportData = HomeComponent.reportData.filter(element => element.id != report.id);
         this.updateReportData();
