@@ -118,12 +118,12 @@ export class TrackingFunctionsModalComponent {
                 //Se não foi calculado a distancia de um avião para outro
                 if (trackCollision.indexOf(String(data2.id) + String(data.id)) == -1) {
                     //Calcula os componentes de velocidade do Avião 1
-                    const Vx1 = Number(data.speed) * Number((Math.cos(data.direction / (180 / Math.PI))).toFixed(2));
-                    const Vy1 = Number(data.speed) * Number((Math.sin(data.direction / (180 / Math.PI))).toFixed(2));
-
+                    const Vx1 = Number(data.speed) * Number((Math.cos(data.direction / (180 / Math.PI))));
+                    const Vy1 = Number(data.speed) * Number((Math.sin(data.direction / (180 / Math.PI))));
+                 
                     //Calcula os componentes de velocidade do Avião 2
-                    const Vx2 = Number(data2.speed) * Number((Math.cos(data2.direction / (180 / Math.PI))).toFixed(2));
-                    const Vy2 = Number(data2.speed) * Number((Math.sin(data2.direction / (180 / Math.PI))).toFixed(2));
+                    const Vx2 = Number(data2.speed) * Number((Math.cos(data2.direction / (180 / Math.PI))));
+                    const Vy2 = Number(data2.speed) * Number((Math.sin(data2.direction / (180 / Math.PI))));
                         
                     //Variaveis para controle de igualdade nas funções de tempo
                     let XequalInTime = true;
@@ -159,10 +159,13 @@ export class TrackingFunctionsModalComponent {
                     px1 = px1 != 1 ? (Number(data2.x) + Number(Vx2)) / (Number(data.x) + Number(Vx1)) : px1;
                     px2 = px2 != 1 ? (Number(data2.y) + Number(Vy2)) / (Number(data.y) + Number(Vy1)) : px2;
                     
+                    const firstCalc = Number(px1) > Number(px2) ? Number(px1) : Number(px2);
+                    const lastCalc = Number(px1) > Number(px2) ? Number(px2) : Number(px1);
+
                     //Verifica se os tempos são iguais
                     if (
-                        ((Number((Number(px1) - Number(px2))) < 0.01) &&
-                        (Number((Number(px1) - Number(px2))) > -0.01)) &&
+                        ((Number((Number(firstCalc) - (Number(lastCalc) < 0 ? Number(lastCalc)*-1 : Number(lastCalc)))) < 0.03) &&
+                        (Number((Number(firstCalc) - (Number(lastCalc) < 0 ? Number(lastCalc)*-1 : Number(lastCalc))))  > -0.03)) &&
                         (XequalInTime && YequalInTime)
                     ) {
                         //Verifica se o tempo esta de acordo com o minimo
