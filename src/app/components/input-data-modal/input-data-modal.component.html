@@ -24,12 +24,12 @@
                 </div>
 
                 <div class="flex w-full mt-2">
-                    <ngt-input class="block w-6/12 mr-4" name='speedInput' mask='decimal' [(ngModel)]="speedInput"
-                        label='Velocidade'>
+                    <ngt-input class="block w-6/12 mr-4" name='speedInput' mask='decimal' [jit]='true'
+                        [(ngModel)]="speedInput" label='Velocidade'>
                     </ngt-input>
 
-                    <ngt-input class="block w-6/12" name='directionInput' mask='decimal' [(ngModel)]="directionInput"
-                        label='Direção'>
+                    <ngt-input class="block w-6/12" name='directionInput' mask='decimal' [jit]='true'
+                        [(ngModel)]="directionInput" label='Direção'>
                     </ngt-input>
                 </div>
             </div>
